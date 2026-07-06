@@ -1086,44 +1086,7 @@ spring.datasource.password=    <span class="cm"># kosong untuk XAMPP default</sp
     <tr><td>Tidak ada rate limiting</td><td>Tambahkan filter pembatas login attempt</td></tr>
   </table>
 
-  <h3>⚡ Fitur Baru</h3>
-  <ul style="padding-left:1.4rem;">
-    <li><strong>Notifikasi Email</strong> — kirim konfirmasi booking via email menggunakan Spring Mail + SMTP Gmail.</li>
-    <li><strong>Kalender Ketersediaan</strong> — tampilkan slot tersedia/terpakai dalam format kalender menggunakan FullCalendar.js.</li>
-    <li><strong>Pembayaran Online</strong> — integrasi Midtrans atau Xendit untuk pembayaran digital.</li>
-    <li><strong>Rating &amp; Review</strong> — pelanggan dapat memberi rating lapang setelah booking selesai.</li>
-    <li><strong>Export Data</strong> — admin dapat mengexport data booking ke format Excel/PDF.</li>
-    <li><strong>Manajemen Harga</strong> — setiap lapang dapat memiliki harga per jam yang berbeda-beda.</li>
-  </ul>
 
-  <h3>🏗️ Arsitektur &amp; Infrastruktur</h3>
-  <ul style="padding-left:1.4rem;">
-    <li><strong>REST API</strong> — refactor menjadi backend API (Spring Boot REST) + frontend terpisah (React/Vue.js).</li>
-    <li><strong>Docker</strong> — containerize aplikasi dan database untuk deployment yang konsisten.</li>
-    <li><strong>Foreign Key Constraints</strong> — tambahkan FK antara <code>bookings.lapang_id</code> → <code>lapang.id</code> untuk data integrity.</li>
-    <li><strong>Database Index</strong> — tambahkan index pada kolom <code>username</code>, <code>date</code>, dan <code>lapang_id</code> di tabel bookings untuk query yang lebih cepat.</li>
-    <li><strong>Connection Pooling</strong> — HikariCP sudah termasuk di Spring Boot, namun konfigurasi pool size perlu disesuaikan untuk production.</li>
-    <li><strong>Soft Delete</strong> — tambahkan kolom <code>deleted_at</code> alih-alih menghapus data langsung, sehingga histori tetap tersimpan.</li>
-  </ul>
-
-  <h3>📱 Pengalaman Pengguna</h3>
-  <ul style="padding-left:1.4rem;">
-    <li><strong>Aplikasi Mobile</strong> — bungkus aplikasi web menggunakan PWA (Progressive Web App) atau kembangkan app Android/iOS native.</li>
-    <li><strong>Dark Mode</strong> — tambahkan toggle tema gelap/terang.</li>
-    <li><strong>Pencarian &amp; Filter</strong> — fitur pencarian booking berdasarkan tanggal, lapang, atau nama pelanggan.</li>
-  </ul>
-
-  <div class="box info" style="margin-top:2rem;">
-    <strong>📚 Referensi &amp; Sumber Belajar</strong>
-    <ul style="padding-left:1.2rem; margin-top:.3rem;">
-      <li>Spring Boot Documentation: <code>https://spring.io/projects/spring-boot</code></li>
-      <li>Spring Data JPA Guide: <code>https://spring.io/projects/spring-data-jpa</code></li>
-      <li>Thymeleaf Documentation: <code>https://www.thymeleaf.org/documentation.html</code></li>
-      <li>Bootstrap 5 Docs: <code>https://getbootstrap.com/docs/5.3</code></li>
-      <li>MySQL Documentation: <code>https://dev.mysql.com/doc</code></li>
-      <li>Baeldung Spring Tutorials: <code>https://www.baeldung.com</code></li>
-    </ul>
-  </div>
 
   <!-- Penutup akhir -->
   <div style="text-align:center; margin-top:3rem; padding: 2rem; border-top: 2px solid #e2e8f0;">
