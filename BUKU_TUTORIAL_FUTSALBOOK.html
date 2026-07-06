@@ -49,7 +49,7 @@
   }
   .cover .author-box p { font-size: 9pt; color: #64748b; text-transform: uppercase; letter-spacing: 1px; margin-bottom: .3rem; }
   .cover .author-box h3 { font-size: 16pt; font-weight: 700; color: #e2e8f0; }
-  .cover .meta { font-size: 9pt; color: #475569; margin-top: 1rem; }
+  .cover .meta { font-size: 9pt; color: #94a3b8; margin-top: 1rem; }
 
   /* ── Content wrapper ── */
   .content { max-width: 800px; margin: 0 auto; padding: 2.5rem 3rem; }
@@ -64,13 +64,12 @@
     font-size: 9pt; font-weight: 700; color: #4fc3f7;
     text-transform: uppercase; letter-spacing: 2px; margin-bottom: .4rem;
   }
-  .chapter-header h2 { font-size: 20pt; font-weight: 800; }
-  .chapter-header p  { color: #94a3b8; margin-top: .5rem; font-size: 10pt; }
+  .chapter-header h2 { font-size: 20pt; font-weight: 800; color: #ffffff !important; border: none !important; padding: 0 !important; margin: 0 !important; }
+  .chapter-header p  { color: #cbd5e1; margin-top: .5rem; font-size: 10pt; }
 
   h2 { font-size: 17pt; font-weight: 700; color: #0f172a; margin: 2rem 0 .8rem; border-bottom: 2px solid #e2e8f0; padding-bottom: .4rem; }
   h3 { font-size: 13pt; font-weight: 700; color: #1e3a5f; margin: 1.5rem 0 .5rem; }
   h4 { font-size: 11pt; font-weight: 600; color: #334155; margin: 1rem 0 .3rem; }
-  p  { margin-bottom: .8rem; text-align: justify; }
 
   /* ── Info boxes ── */
   .box {
@@ -102,7 +101,7 @@
   .cls { color: #82aaff; }   /* class / type */
   .fn  { color: #82cfff; }   /* function */
   .str { color: #c3e88d; }   /* string */
-  .cm  { color: #546e7a; }   /* comment */
+  .cm  { color: #7fdbca; }   /* comment — terang agar terbaca di bg gelap */
   .an  { color: #ffcb6b; }   /* annotation */
   .num { color: #f78c6c; }   /* number */
 
@@ -395,33 +394,33 @@ mvnw.cmd clean package      <span class="cm"># buat file JAR</span></pre>
 <span class="dir">web/</span>
 ├── <span class="dir">src/main/java/com/tugas/web/</span>
 │   ├── <span class="dir">config/</span>
-│   │   └── <span class="file">WebConfig.java</span>          <span style="color:#546e7a;">← resource handler /uploads/**</span>
+│   │   └── <span class="file">WebConfig.java</span>          <span style="color:#7fdbca;">← resource handler /uploads/**</span>
 │   ├── <span class="dir">controller/</span>
-│   │   ├── <span class="file">AuthController.java</span>     <span style="color:#546e7a;">← login, logout</span>
-│   │   ├── <span class="file">UserController.java</span>     <span style="color:#546e7a;">← register, dashboard, booking</span>
-│   │   ├── <span class="file">AdminController.java</span>    <span style="color:#546e7a;">← CRUD lapang, user, booking admin</span>
-│   │   └── <span class="file">HomeController.java</span>     <span style="color:#546e7a;">← redirect / ke /login</span>
+│   │   ├── <span class="file">AuthController.java</span>     <span style="color:#7fdbca;">← login, logout</span>
+│   │   ├── <span class="file">UserController.java</span>     <span style="color:#7fdbca;">← register, dashboard, booking</span>
+│   │   ├── <span class="file">AdminController.java</span>    <span style="color:#7fdbca;">← CRUD lapang, user, booking admin</span>
+│   │   └── <span class="file">HomeController.java</span>     <span style="color:#7fdbca;">← redirect / ke /login</span>
 │   ├── <span class="dir">model/</span>
-│   │   ├── <span class="new">User.java</span>               <span style="color:#546e7a;">← @Entity tabel users</span>
-│   │   ├── <span class="new">Lapang.java</span>             <span style="color:#546e7a;">← @Entity tabel lapang</span>
-│   │   └── <span class="new">Booking.java</span>            <span style="color:#546e7a;">← @Entity tabel bookings</span>
+│   │   ├── <span class="new">User.java</span>               <span style="color:#7fdbca;">← @Entity tabel users</span>
+│   │   ├── <span class="new">Lapang.java</span>             <span style="color:#7fdbca;">← @Entity tabel lapang</span>
+│   │   └── <span class="new">Booking.java</span>            <span style="color:#7fdbca;">← @Entity tabel bookings</span>
 │   ├── <span class="dir">repository/</span>               <span style="color:#ffcb6b;">← NEW: JPA Repositories</span>
 │   │   ├── <span class="new">UserRepository.java</span>
 │   │   ├── <span class="new">LapangRepository.java</span>
 │   │   └── <span class="new">BookingRepository.java</span>
 │   ├── <span class="dir">service/</span>
-│   │   └── <span class="file">AppDataService.java</span>     <span style="color:#546e7a;">← business logic + data access</span>
-│   └── <span class="file">WebApplication.java</span>         <span style="color:#546e7a;">← entry point @SpringBootApplication</span>
+│   │   └── <span class="file">AppDataService.java</span>     <span style="color:#7fdbca;">← business logic + data access</span>
+│   └── <span class="file">WebApplication.java</span>         <span style="color:#7fdbca;">← entry point @SpringBootApplication</span>
 ├── <span class="dir">src/main/resources/</span>
-│   ├── <span class="file">application.properties</span>      <span style="color:#546e7a;">← config datasource, JPA, multipart</span>
+│   ├── <span class="file">application.properties</span>      <span style="color:#7fdbca;">← config datasource, JPA, multipart</span>
 │   └── <span class="dir">templates/</span>
 │       ├── <span class="file">login.html</span>
 │       ├── <span class="file">register.html</span>
-│       ├── <span class="file">home.html</span>               <span style="color:#546e7a;">← halaman booking lapang</span>
-│       ├── <span class="file">dashboard.html</span>          <span style="color:#546e7a;">← dashboard pelanggan</span>
-│       └── <span class="file">admin-dashboard.html</span>    <span style="color:#546e7a;">← dashboard admin (tab)</span>
-├── <span class="dir">uploads/</span>                        <span style="color:#546e7a;">← foto lapang (lapang-1.jpg, dll)</span>
-└── <span class="file">pom.xml</span>                         <span style="color:#546e7a;">← dependencies Maven</span>
+│       ├── <span class="file">home.html</span>               <span style="color:#7fdbca;">← halaman booking lapang</span>
+│       ├── <span class="file">dashboard.html</span>          <span style="color:#7fdbca;">← dashboard pelanggan</span>
+│       └── <span class="file">admin-dashboard.html</span>    <span style="color:#7fdbca;">← dashboard admin (tab)</span>
+├── <span class="dir">uploads/</span>                        <span style="color:#7fdbca;">← foto lapang (lapang-1.jpg, dll)</span>
+└── <span class="file">pom.xml</span>                         <span style="color:#7fdbca;">← dependencies Maven</span>
   </div>
 
   <h2 id="bab3-arsitektur">3.2 Arsitektur Aplikasi (MVC + Repository Pattern)</h2>
@@ -983,59 +982,49 @@ spring.datasource.password=    <span class="cm"># kosong untuk XAMPP default</sp
   <h3>Halaman Login</h3>
   <div class="screenshot">
     <div class="ss-title">📸 Screenshot: Halaman Login (/login)</div>
-    <p>Tampilkan screenshot halaman login di sini.<br>Tema: background gradient gelap (#1a1a2e → #16213e), card putih rounded, form username &amp; password dengan ikon.</p>
-    <div style="background:#1a1a2e;color:#4fc3f7;padding:1rem;border-radius:8px;font-size:9pt;margin-top:.5rem;font-family:'Fira Code',monospace;">
-      ⚽ Futsal<br>
-      <span style="color:#e2e8f0;">Selamat Datang</span><br>
-      <span style="color:#94a3b8;">Masuk untuk mulai booking lapang favoritmu</span><br><br>
-      [👤 username ...........]<br>
-      [🔒 password ...........]<br>
-      [→ Masuk]<br><br>
-      <span style="color:#64748b;">── atau ──</span><br>
-      Belum punya akun? <span style="color:#4fc3f7;">Daftar sekarang</span>
-    </div>
+    <img src="screenshots/ss-login.png" alt="Halaman Login" style="width:100%;border-radius:8px;margin-top:.5rem;">
   </div>
 
   <h3>Halaman Register</h3>
   <div class="screenshot">
     <div class="ss-title">📸 Screenshot: Halaman Register (/register)</div>
-    <p>Tema identik dengan login. Form hanya berisi username dan password. Link ke halaman login tersedia di bawah form.</p>
+    <img src="screenshots/ss-register.png" alt="Halaman Register" style="width:100%;border-radius:8px;margin-top:.5rem;">
   </div>
 
   <h3>Dashboard Pelanggan</h3>
   <div class="screenshot">
     <div class="ss-title">📸 Screenshot: Dashboard User (/dashboard)</div>
-    <p>Sidebar kiri navigasi. Kartu statistik (jumlah booking, lapang tersedia). Grid foto lapang (2 kolom, gambar besar). Riwayat booking sebagai card compact di kolom kanan.</p>
+    <img src="screenshots/ss-dashboard-pelanggan.png" alt="Dashboard Pelanggan" style="width:100%;border-radius:8px;margin-top:.5rem;">
   </div>
 
   <h3>Halaman Booking Lapang</h3>
   <div class="screenshot">
     <div class="ss-title">📸 Screenshot: Booking Lapang (/home)</div>
-    <p>Form booking dengan gradient biru. Pilih lapang (dropdown), tanggal, jam mulai, jam selesai. Daftar lapang dan riwayat booking di kolom kanan.</p>
+    <img src="screenshots/ss-booking-lapang.png" alt="Halaman Booking" style="width:100%;border-radius:8px;margin-top:.5rem;">
   </div>
 
   <h3>Dashboard Admin</h3>
   <div class="screenshot">
     <div class="ss-title">📸 Screenshot: Dashboard Admin (/admin/dashboard)</div>
-    <p>Tab navigasi: Overview · Manajemen Lapang · Semua Booking · Data Pelanggan. Statistik: total booking, pelanggan unik, booking hari ini.</p>
+    <img src="screenshots/ss-dashboard-admin.png" alt="Dashboard Admin" style="width:100%;border-radius:8px;margin-top:.5rem;">
   </div>
 
   <h3>Manajemen Lapang (Admin)</h3>
   <div class="screenshot">
     <div class="ss-title">📸 Screenshot: Tab Manajemen Lapang di Admin Dashboard</div>
-    <p>Tabel daftar lapang. Per baris: nama lapang, foto (thumbnail), tombol Edit, Hapus, dan form Upload Foto.</p>
+    <img src="screenshots/ss-manajemen-lapang.png" alt="Manajemen Lapang" style="width:100%;border-radius:8px;margin-top:.5rem;">
   </div>
 
   <h3>Data Pelanggan (Admin)</h3>
   <div class="screenshot">
     <div class="ss-title">📸 Screenshot: Tab Data Pelanggan di Admin Dashboard</div>
-    <p>Tabel: username, email, phone, tanggal daftar, jumlah total booking, tombol Hapus Akun.</p>
+    <img src="screenshots/ss-data-pelanggan.png" alt="Data Pelanggan" style="width:100%;border-radius:8px;margin-top:.5rem;">
   </div>
 
   <h3>Verifikasi Database di phpMyAdmin</h3>
   <div class="screenshot">
     <div class="ss-title">📸 Screenshot: Database futsalbook_db di phpMyAdmin</div>
-    <p>Tampilkan 3 tabel: users, lapang, bookings. Tunjukkan isi tabel lapang (4 baris seed data) dan tabel bookings setelah membuat booking.</p>
+    <img src="screenshots/ss-phpMyAdmin.png" alt="phpMyAdmin" style="width:100%;border-radius:8px;margin-top:.5rem;">
   </div>
 
   <div class="box success" style="margin-top:1.5rem;">
