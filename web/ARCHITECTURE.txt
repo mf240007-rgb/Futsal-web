@@ -1,0 +1,266 @@
+╔═══════════════════════════════════════════════════════════════════════════╗
+║                    FUTSALBOOK - ARCHITECTURE DIAGRAM                      ║
+║                         MySQL Integration                                 ║
+╚═══════════════════════════════════════════════════════════════════════════╝
+
+┌───────────────────────────────────────────────────────────────────────────┐
+│                           PRESENTATION LAYER                              │
+├───────────────────────────────────────────────────────────────────────────┤
+│                                                                           │
+│  ┌──────────────┐  ┌──────────────┐  ┌──────────────┐  ┌─────────────┐  │
+│  │   login.html │  │register.html │  │   home.html  │  │dashboard.html│ │
+│  └──────────────┘  └──────────────┘  └──────────────┘  └─────────────┘  │
+│                                                                           │
+│  ┌──────────────────────────────────────────────────────────────────┐    │
+│  │              admin-dashboard.html                                │    │
+│  │  (Lapang Management + User Management + Booking Management)      │    │
+│  └──────────────────────────────────────────────────────────────────┘    │
+│                                                                           │
+│  Technology: Thymeleaf Templates + Bootstrap 5                            │
+└───────────────────────────────────────────────────────────────────────────┘
+                                    │
+                                    ▼
+┌───────────────────────────────────────────────────────────────────────────┐
+│                           CONTROLLER LAYER                                │
+├───────────────────────────────────────────────────────────────────────────┤
+│                                                                           │
+│  ┌─────────────────┐   ┌─────────────────┐   ┌─────────────────┐        │
+│  │ AuthController  │   │ UserController  │   │ AdminController │        │
+│  ├─────────────────┤   ├─────────────────┤   ├─────────────────┤        │
+│  │ /login          │   │ /register       │   │ /admin          │        │
+│  │ POST /login     │   │ POST /register  │   │ /admin/lapang/* │        │
+│  │ /logout         │   │ /dashboard      │   │ /admin/booking/*│        │
+│  │ (admin check)   │   │ /booking/create │   │ /admin/user/*   │        │
+│  └─────────────────┘   └─────────────────┘   └─────────────────┘        │
+│                                                                           │
+│  ┌─────────────────┐                                                     │
+│  │ HomeController  │                                                     │
+│  ├─────────────────┤                                                     │
+│  │ /               │                                                     │
+│  │ /home           │                                                     │
+│  └─────────────────┘                                                     │
+│                                                                           │
+│  Technology: Spring MVC @RestController / @Controller                    │
+└───────────────────────────────────────────────────────────────────────────┘
+                                    │
+                                    ▼
+┌───────────────────────────────────────────────────────────────────────────┐
+│                            SERVICE LAYER                                  │
+├───────────────────────────────────────────────────────────────────────────┤
+│                                                                           │
+│  ┌──────────────────────────────────────────────────────────────────┐    │
+│  │                     AppDataService                               │    │
+│  ├──────────────────────────────────────────────────────────────────┤    │
+│  │                                                                  │    │
+│  │  ┌────────────────┐  ┌────────────────┐  ┌────────────────┐    │    │
+│  │  │ User Methods   │  │ Lapang Methods │  │Booking Methods │    │    │
+│  │  ├────────────────┤  ├────────────────┤  ├────────────────┤    │    │
+│  │  │ getUsers()     │  │ getLapangs()   │  │ getBookings()  │    │    │
+│  │  │ findUser()     │  │ findLapangById │  │ addBooking()   │    │    │
+│  │  │ addUser()      │  │ saveLapang()   │  │ deleteBooking()│    │    │
+│  │  │ deleteUser()   │  │ deleteLapang() │  │ isAvailable()  │    │    │
+│  │  │ existsUser()   │  │ updatePhoto()  │  │getBookingsToday│    │    │
+│  │  └────────────────┘  └────────────────┘  └────────────────┘    │    │
+│  │                                                                  │    │
+│  │  @Service + @Transactional                                      │    │
+│  └──────────────────────────────────────────────────────────────────┘    │
+│                                                                           │
+│  Business Logic + Transaction Management                                  │
+└───────────────────────────────────────────────────────────────────────────┘
+                                    │
+                                    ▼
+┌───────────────────────────────────────────────────────────────────────────┐
+│                          REPOSITORY LAYER                                 │
+├───────────────────────────────────────────────────────────────────────────┤
+│                                                                           │
+│  ┌──────────────────┐  ┌──────────────────┐  ┌──────────────────┐       │
+│  │ UserRepository   │  │ LapangRepository │  │BookingRepository │       │
+│  ├──────────────────┤  ├──────────────────┤  ├──────────────────┤       │
+│  │ JpaRepository    │  │ JpaRepository    │  │ JpaRepository    │       │
+│  │ <User, Long>     │  │ <Lapang, Long>   │  │ <Booking, Long>  │       │
+│  ├──────────────────┤  ├──────────────────┤  ├──────────────────┤       │
+│  │ findByUsername() │  │ (standard CRUD)  │  │ findByUsername() │       │
+│  │ existsByUsername │  │                  │  │ findByDate()     │       │
+│  │ findByRole()     │  │                  │  │ isAvailable()    │       │
+│  │ (CRUD auto)      │  │                  │  │ (CRUD auto)      │       │
+│  └──────────────────┘  └──────────────────┘  └──────────────────┘       │
+│                                                                           │
+│  Technology: Spring Data JPA                                              │
+│  Auto-implements: save, findById, findAll, deleteById, count, etc.        │
+└───────────────────────────────────────────────────────────────────────────┘
+                                    │
+                                    ▼
+┌───────────────────────────────────────────────────────────────────────────┐
+│                           PERSISTENCE LAYER                               │
+├───────────────────────────────────────────────────────────────────────────┤
+│                                                                           │
+│  ┌──────────────────────────────────────────────────────────────────┐    │
+│  │                       JPA / Hibernate                            │    │
+│  ├──────────────────────────────────────────────────────────────────┤    │
+│  │  • Entity Management                                             │    │
+│  │  • SQL Generation                                                │    │
+│  │  • Transaction Coordination                                      │    │
+│  │  • Cache Management (First Level Cache)                          │    │
+│  │  • DDL Auto-generation (create/update/validate)                  │    │
+│  └──────────────────────────────────────────────────────────────────┘    │
+│                                                                           │
+│  ┌──────────────────────────────────────────────────────────────────┐    │
+│  │                    MySQL Connector/J                             │    │
+│  └──────────────────────────────────────────────────────────────────┘    │
+│                                                                           │
+└───────────────────────────────────────────────────────────────────────────┘
+                                    │
+                                    ▼
+┌───────────────────────────────────────────────────────────────────────────┐
+│                            DATABASE LAYER                                 │
+├───────────────────────────────────────────────────────────────────────────┤
+│                                                                           │
+│  ┌──────────────────────────────────────────────────────────────────┐    │
+│  │                     MySQL Database (XAMPP)                       │    │
+│  │                     Database: futsalbook_db                      │    │
+│  ├──────────────────────────────────────────────────────────────────┤    │
+│  │                                                                  │    │
+│  │  ┌──────────────┐  ┌──────────────┐  ┌──────────────┐          │    │
+│  │  │ TABLE: users │  │TABLE: lapang │  │TABLE:bookings│          │    │
+│  │  ├──────────────┤  ├──────────────┤  ├──────────────┤          │    │
+│  │  │ id (PK)      │  │ id (PK)      │  │ id (PK)      │          │    │
+│  │  │ username (UK)│  │ name         │  │ lapang_id    │          │    │
+│  │  │ password     │  │ photo_path   │  │ lapang_name  │          │    │
+│  │  │ role         │  │              │  │ username     │          │    │
+│  │  │ email        │  │              │  │ date         │          │    │
+│  │  │ phone        │  │              │  │ start_time   │          │    │
+│  │  │registered_at │  │              │  │ end_time     │          │    │
+│  │  └──────────────┘  └──────────────┘  │ created_at   │          │    │
+│  │                                      └──────────────┘          │    │
+│  │                                                                  │    │
+│  └──────────────────────────────────────────────────────────────────┘    │
+│                                                                           │
+│  Server: MySQL 8.x (XAMPP)                                                │
+│  Port: 3306                                                               │
+│  Charset: utf8mb4_unicode_ci                                              │
+└───────────────────────────────────────────────────────────────────────────┘
+
+
+╔═══════════════════════════════════════════════════════════════════════════╗
+║                           DATA FLOW EXAMPLE                               ║
+║                     (User Creates a Booking)                              ║
+╚═══════════════════════════════════════════════════════════════════════════╝
+
+1. USER ACTION:
+   User mengisi form booking di dashboard.html dan klik "Book"
+   
+2. HTTP REQUEST:
+   POST /booking/create
+   Body: {lapangId=1, date=2026-06-23, startTime=14:00, endTime=16:00}
+   
+3. CONTROLLER (UserController):
+   @PostMapping("/booking/create")
+   public String createBooking(@RequestParam Long lapangId, ...)
+   ↓
+   Validate inputs
+   Check session username
+   ↓
+   
+4. SERVICE (AppDataService):
+   isLapangAvailable(lapangId, date, startTime, endTime)
+   ↓
+   if available → addBooking(lapangId, username, date, startTime, endTime)
+   ↓
+   
+5. REPOSITORY (BookingRepository):
+   bookingRepository.save(booking)
+   ↓
+   
+6. JPA/HIBERNATE:
+   Generate SQL: INSERT INTO bookings (lapang_id, lapang_name, username, 
+                 date, start_time, end_time, created_at) 
+                 VALUES (1, 'Lapang 1', 'user1', '2026-06-23', 
+                 '14:00:00', '16:00:00', NOW())
+   ↓
+   
+7. MYSQL CONNECTOR:
+   Execute SQL statement via JDBC connection
+   ↓
+   
+8. DATABASE (MySQL):
+   Insert row into bookings table
+   Auto-generate ID (e.g., id=1)
+   Commit transaction
+   ↓
+   
+9. RESPONSE:
+   Success → Booking ID returned
+   ↓
+   
+10. CONTROLLER:
+    Redirect to /dashboard with success message
+    ↓
+    
+11. VIEW (dashboard.html):
+    Display "Booking berhasil!" + Show booking in "Riwayat Booking Saya"
+
+
+╔═══════════════════════════════════════════════════════════════════════════╗
+║                      CONFIGURATION SUMMARY                                ║
+╚═══════════════════════════════════════════════════════════════════════════╝
+
+┌───────────────────────────────────────────────────────────────────────────┐
+│ application.properties                                                    │
+├───────────────────────────────────────────────────────────────────────────┤
+│ spring.datasource.url=jdbc:mysql://localhost:3306/futsalbook_db          │
+│ spring.datasource.username=root                                          │
+│ spring.datasource.password=                                              │
+│ spring.jpa.hibernate.ddl-auto=update                                     │
+│ spring.jpa.show-sql=true                                                 │
+└───────────────────────────────────────────────────────────────────────────┘
+
+┌───────────────────────────────────────────────────────────────────────────┐
+│ pom.xml Dependencies                                                      │
+├───────────────────────────────────────────────────────────────────────────┤
+│ • spring-boot-starter-web                                                │
+│ • spring-boot-starter-thymeleaf                                          │
+│ • spring-boot-starter-data-jpa        ← NEW                             │
+│ • mysql-connector-j                   ← NEW                             │
+│ • spring-boot-starter-actuator                                           │
+└───────────────────────────────────────────────────────────────────────────┘
+
+
+╔═══════════════════════════════════════════════════════════════════════════╗
+║                         KEY FEATURES                                      ║
+╚═══════════════════════════════════════════════════════════════════════════╝
+
+✅ Auto Database Creation      → createDatabaseIfNotExist=true
+✅ Auto Table Creation          → ddl-auto=update
+✅ Auto Primary Key Generation  → @GeneratedValue AUTO_INCREMENT
+✅ Transaction Management       → @Transactional
+✅ Query Method Derivation      → findByUsername(), findByRole()
+✅ Custom Query Support         → @Query annotation
+✅ Connection Pooling           → HikariCP (default in Spring Boot)
+✅ SQL Logging                  → show-sql=true for debugging
+✅ Data Seeding                 → @PostConstruct init()
+✅ Session Management           → HttpSession for user auth
+
+
+╔═══════════════════════════════════════════════════════════════════════════╗
+║                    MIGRATION COMPARISON                                   ║
+╚═══════════════════════════════════════════════════════════════════════════╝
+
+┌─────────────────────────┬──────────────────────┬──────────────────────────┐
+│ ASPECT                  │ BEFORE (In-Memory)   │ AFTER (MySQL)            │
+├─────────────────────────┼──────────────────────┼──────────────────────────┤
+│ Storage                 │ ArrayList            │ MySQL Database           │
+│ Persistence             │ ❌ Lost on restart    │ ✅ Permanent             │
+│ ID Generation           │ AtomicLong manual    │ Auto-increment (MySQL)   │
+│ Transactions            │ ❌ None               │ ✅ ACID compliant        │
+│ Concurrency             │ ❌ Not safe           │ ✅ Database locks        │
+│ Scalability             │ ❌ Limited by memory  │ ✅ Disk-based            │
+│ Query Performance       │ ✅ Very fast (memory) │ ⚠️ Network + disk I/O    │
+│ Data Backup             │ ❌ Not possible       │ ✅ Export/Import SQL     │
+│ Multi-user Support      │ ❌ Risk of data loss  │ ✅ Full support          │
+│ Restart Impact          │ ❌ ALL DATA LOST      │ ✅ NO DATA LOST          │
+└─────────────────────────┴──────────────────────┴──────────────────────────┘
+
+
+╔═══════════════════════════════════════════════════════════════════════════╗
+║                       END OF ARCHITECTURE                                 ║
+╚═══════════════════════════════════════════════════════════════════════════╝

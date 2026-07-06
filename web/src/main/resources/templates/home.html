@@ -1,0 +1,316 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Booking Lapang - FutsalBook</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css" rel="stylesheet">
+    <style>
+        body { background-color: #f0f4f8; }
+        .sidebar {
+            min-height: 100vh;
+            background: linear-gradient(180deg, #1a1a2e 0%, #16213e 100%);
+            color: #fff;
+            width: 240px;
+            position: fixed;
+            top: 0; left: 0;
+            padding-top: 1rem;
+            z-index: 100;
+        }
+        .sidebar .brand {
+            font-size: 1.2rem;
+            font-weight: 700;
+            color: #4fc3f7;
+            padding: 1rem 1.5rem 0.5rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+        .sidebar .nav-link {
+            color: #b0bec5;
+            padding: 0.65rem 1.5rem;
+            display: flex;
+            align-items: center;
+            gap: 0.6rem;
+            font-size: 0.95rem;
+            transition: all 0.2s;
+        }
+        .sidebar .nav-link:hover, .sidebar .nav-link.active {
+            color: #fff;
+            background-color: rgba(79, 195, 247, 0.15);
+            border-left: 3px solid #4fc3f7;
+        }
+        .sidebar .nav-link i { font-size: 1.1rem; }
+        .sidebar .nav-section {
+            font-size: 0.7rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            color: #546e7a;
+            padding: 1rem 1.5rem 0.25rem;
+        }
+        .main-content {
+            margin-left: 240px;
+            min-height: 100vh;
+        }
+        .topbar {
+            background: #fff;
+            border-bottom: 1px solid #e0e7ef;
+            padding: 0.75rem 2rem;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            position: sticky;
+            top: 0;
+            z-index: 99;
+            box-shadow: 0 1px 4px rgba(0,0,0,0.06);
+        }
+        .topbar .page-title {
+            font-size: 1.1rem;
+            font-weight: 600;
+            color: #1a1a2e;
+        }
+        .content-card {
+            background: #fff;
+            border-radius: 16px;
+            box-shadow: 0 2px 12px rgba(0,0,0,0.07);
+            border: none;
+        }
+        .avatar {
+            width: 36px; height: 36px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, #4fc3f7, #0288d1);
+            display: flex; align-items: center; justify-content: center;
+            color: #fff;
+            font-weight: 700;
+            font-size: 0.95rem;
+        }
+        .time-badge {
+            background: #e3f2fd;
+            color: #0277bd;
+            padding: 0.2em 0.6em;
+            border-radius: 8px;
+            font-size: 0.82rem;
+            font-weight: 500;
+        }
+        .booking-form-card {
+            background: linear-gradient(135deg, #1565c0, #1976d2);
+            border-radius: 20px;
+            color: #fff;
+            border: none;
+        }
+        .booking-form-card .form-label { color: rgba(255,255,255,0.85); font-weight: 500; }
+        .booking-form-card .form-control,
+        .booking-form-card .form-select {
+            background: rgba(255,255,255,0.15);
+            border: 1px solid rgba(255,255,255,0.3);
+            color: #fff;
+            border-radius: 10px;
+        }
+        .booking-form-card .form-control::placeholder { color: rgba(255,255,255,0.5); }
+        .booking-form-card .form-control:focus,
+        .booking-form-card .form-select:focus {
+            background: rgba(255,255,255,0.25);
+            border-color: rgba(255,255,255,0.6);
+            box-shadow: none;
+            color: #fff;
+        }
+        .booking-form-card .form-select option { color: #000; background: #fff; }
+        .lapang-item {
+            border-radius: 12px;
+            border: 1px solid #e0e7ef;
+            padding: 0.75rem 1rem;
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            margin-bottom: 0.5rem;
+            background: #fafbfc;
+            transition: box-shadow 0.15s;
+        }
+        .lapang-item:hover { box-shadow: 0 2px 8px rgba(0,0,0,0.07); }
+        .lapang-icon {
+            width: 38px; height: 38px;
+            border-radius: 10px;
+            background: #e8f5e9;
+            display: flex; align-items: center; justify-content: center;
+        }
+    </style>
+</head>
+<body>
+
+<!-- Sidebar -->
+<div class="sidebar">
+    <div class="brand">
+        <i class="bi bi-dribbble"></i> FutsalBook
+    </div>
+    <div class="nav-section">Menu</div>
+    <a href="/dashboard" class="nav-link">
+        <i class="bi bi-grid-1x2"></i> Dashboard
+    </a>
+    <a href="/home" class="nav-link active">
+        <i class="bi bi-calendar-plus"></i> Booking Lapang
+    </a>
+    <div class="nav-section">Akun</div>
+    <a href="/logout" class="nav-link">
+        <i class="bi bi-box-arrow-right"></i> Logout
+    </a>
+</div>
+
+<!-- Main Content -->
+<div class="main-content">
+    <!-- Topbar -->
+    <div class="topbar">
+        <span class="page-title"><i class="bi bi-calendar-plus me-2 text-primary"></i>Booking Lapang</span>
+        <div class="d-flex align-items-center gap-3">
+            <div class="avatar" th:text="${usernameInitial}">U</div>
+            <div>
+                <div class="fw-semibold" style="font-size:0.9rem;" th:text="${username}">User</div>
+                <div class="text-muted" style="font-size:0.75rem;">Member</div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Page Body -->
+    <div class="p-4">
+        <!-- Alerts -->
+        <div th:if="${successMessage}" class="alert alert-success alert-dismissible fade show border-0 rounded-3" role="alert">
+            <i class="bi bi-check-circle me-2"></i><span th:text="${successMessage}"></span>
+            <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+        </div>
+        <div th:if="${errorMessage}" class="alert alert-danger alert-dismissible fade show border-0 rounded-3" role="alert">
+            <i class="bi bi-exclamation-circle me-2"></i><span th:text="${errorMessage}"></span>
+            <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+        </div>
+
+        <div class="row g-4">
+            <!-- Booking Form -->
+            <div class="col-lg-7">
+                <div class="card booking-form-card p-4">
+                    <h5 class="fw-bold mb-1"><i class="bi bi-calendar-plus me-2"></i>Form Booking Lapang</h5>
+                    <p class="mb-4" style="color:rgba(255,255,255,0.7);font-size:0.88rem;">Pilih lapang, tanggal, dan waktu yang kamu inginkan</p>
+                    <form th:action="@{/booking}" method="POST">
+                        <div class="row gy-3">
+                            <div class="col-md-12">
+                                <label class="form-label">Pilih Lapang</label>
+                                <select class="form-select" name="lapangId" required>
+                                    <option value="" selected disabled>-- Pilih lapang --</option>
+                                    <option th:each="lapang : ${lapangs}"
+                                            th:value="${lapang.id}"
+                                            th:text="${lapang.name}"></option>
+                                </select>
+                                <div th:if="${lapangs == null || lapangs.isEmpty()}" class="mt-1" style="color:rgba(255,200,200,0.9);font-size:0.82rem;">
+                                    <i class="bi bi-exclamation-triangle me-1"></i>Data lapang belum tersedia.
+                                </div>
+                            </div>
+                            <div class="col-md-12">
+                                <label class="form-label">Tanggal</label>
+                                <input type="date" class="form-control" name="date" required>
+                            </div>
+                            <div class="col-md-6">
+                                <label class="form-label"><i class="bi bi-clock me-1"></i>Jam Mulai</label>
+                                <input type="time" class="form-control" name="startTime" required>
+                            </div>
+                            <div class="col-md-6">
+                                <label class="form-label"><i class="bi bi-clock-fill me-1"></i>Jam Selesai</label>
+                                <input type="time" class="form-control" name="endTime" required>
+                            </div>
+                        </div>
+                        <button type="submit" class="btn btn-light fw-semibold mt-4 px-4">
+                            <i class="bi bi-calendar-check me-2"></i>Konfirmasi Booking
+                        </button>
+                    </form>
+                </div>
+
+                <!-- Info Card -->
+                <div class="card content-card mt-4 p-3">
+                    <div class="d-flex gap-3 align-items-start">
+                        <div style="font-size:1.8rem; color:#f59e0b;">ℹ️</div>
+                        <div>
+                            <div class="fw-semibold mb-1">Ketentuan Booking</div>
+                            <ul class="mb-0 text-muted" style="font-size:0.88rem; padding-left:1.1rem;">
+                                <li>Lapang yang sudah dibooking tidak bisa dipesan pada rentang waktu yang sama.</li>
+                                <li>Jam selesai harus lebih besar dari jam mulai.</li>
+                                <li>Contoh: mulai 13:00, selesai 15:00 (2 jam sewa).</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Right Column: Lapang List + My Bookings -->
+            <div class="col-lg-5">
+                <!-- Lapang List -->
+                <div class="card content-card p-3 mb-4">
+                    <h6 class="fw-bold mb-3"><i class="bi bi-geo-alt me-2 text-success"></i>Daftar Lapang</h6>
+                    <div th:if="${lapangs == null || lapangs.isEmpty()}" class="text-center text-muted py-2">
+                        Belum ada lapang.
+                    </div>
+                    <div th:each="lapang : ${lapangs}" class="lapang-item">
+                        <img th:if="${lapang.photoPath != null and !lapang.photoPath.isEmpty()}"
+                             th:src="${'/uploads/' + lapang.photoPath}"
+                             style="width:44px;height:44px;object-fit:cover;border-radius:10px;border:1px solid #e0e7ef;"
+                             th:alt="${lapang.name}">
+                        <div th:unless="${lapang.photoPath != null and !lapang.photoPath.isEmpty()}"
+                             class="lapang-icon">
+                            <i class="bi bi-dribbble text-success"></i>
+                        </div>
+                        <div>
+                            <div class="fw-semibold" style="font-size:.9rem;" th:text="${lapang.name}"></div>
+                            <div class="text-muted" style="font-size:.75rem;">Lapang Futsal</div>
+                        </div>
+                        <span class="badge bg-success-subtle text-success border border-success-subtle ms-auto" style="font-size:.72rem;">Tersedia</span>
+                    </div>
+                </div>
+
+                <!-- My Bookings -->
+                <div class="card content-card p-3">
+                    <div class="d-flex justify-content-between align-items-center mb-3">
+                        <h6 class="fw-bold mb-0"><i class="bi bi-list-check me-2 text-primary"></i>Booking Saya</h6>
+                        <span class="badge bg-primary-subtle text-primary border border-primary-subtle"
+                              th:text="${bookings != null ? bookings.size() : 0} + ' booking'">0 booking</span>
+                    </div>
+                    <div th:if="${bookings == null || bookings.isEmpty()}" class="text-center text-muted py-4">
+                        <i class="bi bi-calendar-x" style="font-size:2rem; opacity:0.4;"></i>
+                        <p class="mt-2 mb-0" style="font-size:0.88rem;">Belum ada booking.</p>
+                    </div>
+                    <div th:if="${bookings != null && !bookings.isEmpty()}">
+                        <div class="table-responsive">
+                            <table class="table table-hover align-middle mb-0" style="font-size:0.88rem;">
+                                <thead class="table-light">
+                                    <tr>
+                                        <th>Lapang</th>
+                                        <th>Tanggal</th>
+                                        <th>Jam</th>
+                                        <th>Aksi</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr th:each="booking : ${bookings}">
+                                        <td class="fw-semibold" th:text="${booking.lapangName}"></td>
+                                        <td th:text="${booking.date}"></td>
+                                        <td>
+                                            <span class="time-badge" th:text="|${booking.startTime} - ${booking.endTime}|"></span>
+                                        </td>
+                                        <td>
+                                            <form th:action="@{/booking/cancel}" method="POST"
+                                                  onsubmit="return confirm('Batalkan booking ini?')">
+                                                <input type="hidden" name="bookingId" th:value="${booking.id}" />
+                                                <button type="submit" class="btn btn-sm btn-outline-danger"
+                                                        style="padding:0.2rem 0.5rem; font-size:0.75rem;">
+                                                    <i class="bi bi-x-circle me-1"></i>Batal
+                                                </button>
+                                            </form>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>

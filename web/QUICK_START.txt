@@ -1,0 +1,94 @@
+╔═══════════════════════════════════════════════════════════════╗
+║          FUTSALBOOK - MYSQL QUICK START GUIDE                 ║
+╚═══════════════════════════════════════════════════════════════╝
+
+✅ MYSQL INTEGRATION SELESAI!
+
+┌───────────────────────────────────────────────────────────────┐
+│ 1. START XAMPP                                                │
+├───────────────────────────────────────────────────────────────┤
+│   - Buka XAMPP Control Panel                                  │
+│   - Klik START pada MySQL                                     │
+│   - Pastikan status HIJAU (running)                           │
+└───────────────────────────────────────────────────────────────┘
+
+┌───────────────────────────────────────────────────────────────┐
+│ 2. RUN APPLICATION                                            │
+├───────────────────────────────────────────────────────────────┤
+│   Opsi A: Via Maven Wrapper                                   │
+│   > cd c:\TUGAS\TUGAS ALGO\tugas besar\web                    │
+│   > mvnw.cmd spring-boot:run                                  │
+│                                                               │
+│   Opsi B: Via IDE                                             │
+│   Run class: com.tugas.web.WebApplication                     │
+└───────────────────────────────────────────────────────────────┘
+
+┌───────────────────────────────────────────────────────────────┐
+│ 3. VERIFY DATABASE                                            │
+├───────────────────────────────────────────────────────────────┤
+│   - Buka: http://localhost/phpmyadmin                         │
+│   - Database: futsalbook_db (auto-created)                    │
+│   - Tables: users, lapang, bookings                           │
+└───────────────────────────────────────────────────────────────┘
+
+┌───────────────────────────────────────────────────────────────┐
+│ 4. TEST APPLICATION                                           │
+├───────────────────────────────────────────────────────────────┤
+│   - Buka: http://localhost:8080                               │
+│                                                               │
+│   Login User Demo:                                            │
+│   Username: user1                                             │
+│   Password: user123                                           │
+│                                                               │
+│   Login Admin:                                                │
+│   Username: admin                                             │
+│   Password: admin123                                          │
+└───────────────────────────────────────────────────────────────┘
+
+╔═══════════════════════════════════════════════════════════════╗
+║                    DATABASE CONFIGURATION                     ║
+╠═══════════════════════════════════════════════════════════════╣
+║ Database Name : futsalbook_db                                 ║
+║ Host          : localhost:3306                                ║
+║ Username      : root                                          ║
+║ Password      : (empty)                                       ║
+║ Auto DDL      : update (tables auto-created)                  ║
+╚═══════════════════════════════════════════════════════════════╝
+
+╔═══════════════════════════════════════════════════════════════╗
+║                   PERUBAHAN UTAMA                             ║
+╠═══════════════════════════════════════════════════════════════╣
+║ ❌ SEBELUM: Data hilang setiap restart (ArrayList)            ║
+║ ✅ SEKARANG: Data PERSISTEN di MySQL database                 ║
+║                                                               ║
+║ Dependencies ditambah:                                        ║
+║ - spring-boot-starter-data-jpa                                ║
+║ - mysql-connector-j                                           ║
+║                                                               ║
+║ File baru:                                                    ║
+║ - UserRepository.java                                         ║
+║ - LapangRepository.java                                       ║
+║ - BookingRepository.java                                      ║
+║                                                               ║
+║ Models diubah jadi JPA Entities:                              ║
+║ - User.java (@Entity)                                         ║
+║ - Lapang.java (@Entity)                                       ║
+║ - Booking.java (@Entity)                                      ║
+║                                                               ║
+║ AppDataService.java: Refactored - gunakan Repository          ║
+╚═══════════════════════════════════════════════════════════════╝
+
+╔═══════════════════════════════════════════════════════════════╗
+║                      TROUBLESHOOTING                          ║
+╠═══════════════════════════════════════════════════════════════╣
+║ Error: Communications link failure                            ║
+║ → MySQL di XAMPP belum running, start dulu!                   ║
+║                                                               ║
+║ Error: Access denied for user 'root'                          ║
+║ → Edit application.properties, set password yang benar        ║
+║                                                               ║
+║ Database tidak ter-create                                     ║
+║ → Buat manual di phpMyAdmin atau run database_setup.sql       ║
+╚═══════════════════════════════════════════════════════════════╝
+
+📚 Baca file MYSQL_SETUP_GUIDE.md untuk penjelasan lengkap!

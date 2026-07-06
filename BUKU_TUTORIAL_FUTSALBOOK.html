@@ -1,0 +1,1151 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Buku Tutorial - FutsalBook</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Fira+Code:wght@400;500&display=swap');
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    font-family: 'Inter', sans-serif;
+    font-size: 11pt;
+    line-height: 1.75;
+    color: #1e293b;
+    background: #fff;
+  }
+
+  /* ── Page breaks ── */
+  .page-break { page-break-after: always; break-after: page; }
+  .no-break    { page-break-inside: avoid; break-inside: avoid; }
+
+  /* ── Cover ── */
+  .cover {
+    min-height: 100vh;
+    background: linear-gradient(135deg, #0f172a 0%, #1e3a5f 50%, #0f172a 100%);
+    display: flex; flex-direction: column;
+    align-items: center; justify-content: center;
+    text-align: center; color: #fff; padding: 3rem;
+  }
+  .cover .badge-top {
+    background: rgba(79,195,247,0.15);
+    border: 1px solid rgba(79,195,247,0.4);
+    color: #4fc3f7; font-size: 9pt; font-weight: 600;
+    letter-spacing: 2px; text-transform: uppercase;
+    padding: .4rem 1.2rem; border-radius: 20px; margin-bottom: 2rem;
+  }
+  .cover h1 {
+    font-size: 42pt; font-weight: 800; line-height: 1.15;
+    margin-bottom: .5rem;
+  }
+  .cover h1 span { color: #4fc3f7; }
+  .cover .subtitle { font-size: 14pt; color: #94a3b8; margin-bottom: 3rem; }
+  .cover .author-box {
+    background: rgba(255,255,255,0.07);
+    border: 1px solid rgba(255,255,255,0.12);
+    border-radius: 16px; padding: 1.5rem 3rem; margin-bottom: 2rem;
+  }
+  .cover .author-box p { font-size: 9pt; color: #64748b; text-transform: uppercase; letter-spacing: 1px; margin-bottom: .3rem; }
+  .cover .author-box h3 { font-size: 16pt; font-weight: 700; color: #e2e8f0; }
+  .cover .meta { font-size: 9pt; color: #475569; margin-top: 1rem; }
+
+  /* ── Content wrapper ── */
+  .content { max-width: 800px; margin: 0 auto; padding: 2.5rem 3rem; }
+
+  /* ── Chapter heading ── */
+  .chapter-header {
+    background: linear-gradient(135deg, #0f172a, #1e3a5f);
+    color: #fff; border-radius: 16px;
+    padding: 2rem 2.5rem; margin-bottom: 2rem;
+  }
+  .chapter-header .ch-num {
+    font-size: 9pt; font-weight: 700; color: #4fc3f7;
+    text-transform: uppercase; letter-spacing: 2px; margin-bottom: .4rem;
+  }
+  .chapter-header h2 { font-size: 20pt; font-weight: 800; }
+  .chapter-header p  { color: #94a3b8; margin-top: .5rem; font-size: 10pt; }
+
+  h2 { font-size: 17pt; font-weight: 700; color: #0f172a; margin: 2rem 0 .8rem; border-bottom: 2px solid #e2e8f0; padding-bottom: .4rem; }
+  h3 { font-size: 13pt; font-weight: 700; color: #1e3a5f; margin: 1.5rem 0 .5rem; }
+  h4 { font-size: 11pt; font-weight: 600; color: #334155; margin: 1rem 0 .3rem; }
+  p  { margin-bottom: .8rem; text-align: justify; }
+
+  /* ── Info boxes ── */
+  .box {
+    border-radius: 12px; padding: 1rem 1.4rem; margin: 1rem 0;
+  }
+  .box.info    { background: #eff6ff; border-left: 4px solid #3b82f6; }
+  .box.warning { background: #fffbeb; border-left: 4px solid #f59e0b; }
+  .box.success { background: #f0fdf4; border-left: 4px solid #22c55e; }
+  .box.danger  { background: #fef2f2; border-left: 4px solid #ef4444; }
+  .box strong  { display: block; margin-bottom: .3rem; font-size: 10pt; }
+
+  /* ── Code blocks ── */
+  pre {
+    background: #0f172a; color: #e2e8f0;
+    border-radius: 12px; padding: 1.2rem 1.5rem;
+    font-family: 'Fira Code', monospace; font-size: 8.5pt;
+    line-height: 1.65; overflow-x: auto; margin: 1rem 0;
+    border: 1px solid #1e293b;
+  }
+  code { font-family: 'Fira Code', monospace; font-size: 8.5pt; }
+  p code, li code {
+    background: #f1f5f9; color: #0f172a;
+    padding: .15em .4em; border-radius: 5px;
+    font-size: 8.5pt;
+  }
+
+  /* ── Syntax colours ── */
+  .kw  { color: #c792ea; }   /* keyword */
+  .cls { color: #82aaff; }   /* class / type */
+  .fn  { color: #82cfff; }   /* function */
+  .str { color: #c3e88d; }   /* string */
+  .cm  { color: #546e7a; }   /* comment */
+  .an  { color: #ffcb6b; }   /* annotation */
+  .num { color: #f78c6c; }   /* number */
+
+  /* ── Tables ── */
+  table { width: 100%; border-collapse: collapse; margin: 1rem 0; font-size: 9.5pt; }
+  th { background: #1e3a5f; color: #fff; padding: .55rem .9rem; text-align: left; font-weight: 600; }
+  td { padding: .5rem .9rem; border-bottom: 1px solid #e2e8f0; }
+  tr:nth-child(even) td { background: #f8fafc; }
+
+  /* ── Step badges ── */
+  .step {
+    display: flex; align-items: flex-start; gap: .9rem; margin-bottom: 1.2rem;
+  }
+  .step .num {
+    min-width: 32px; height: 32px; border-radius: 50%;
+    background: linear-gradient(135deg,#1565c0,#4fc3f7);
+    color: #fff; font-weight: 700; font-size: 10pt;
+    display: flex; align-items: center; justify-content: center;
+    flex-shrink: 0; margin-top: .1rem;
+  }
+
+  /* ── File tree ── */
+  .file-tree {
+    background: #0f172a; border-radius: 12px;
+    padding: 1.2rem 1.5rem; font-family: 'Fira Code', monospace;
+    font-size: 8.5pt; color: #e2e8f0; line-height: 1.8;
+    margin: 1rem 0;
+  }
+  .file-tree .dir  { color: #82aaff; }
+  .file-tree .file { color: #c3e88d; }
+  .file-tree .new  { color: #ffcb6b; }
+
+  /* ── Screenshot placeholder ── */
+  .screenshot {
+    border: 2px dashed #cbd5e1; border-radius: 12px;
+    background: #f8fafc; padding: 2rem;
+    text-align: center; color: #64748b;
+    font-size: 9pt; margin: 1rem 0;
+  }
+  .screenshot .ss-title { font-weight: 600; font-size: 10pt; margin-bottom: .3rem; color: #334155; }
+
+  /* ── TOC ── */
+  .toc-item { display: flex; justify-content: space-between; align-items: center; padding: .4rem 0; border-bottom: 1px dotted #e2e8f0; }
+  .toc-item a { text-decoration: none; color: #1e3a5f; font-size: 10pt; }
+  .toc-item a:hover { color: #4fc3f7; }
+  .toc-ch { font-weight: 700; font-size: 11pt; color: #0f172a; margin-top: 1rem; margin-bottom: .2rem; }
+  .toc-page { font-size: 9pt; color: #94a3b8; }
+
+  /* ── Conclusion ── */
+  .conclusion-box {
+    background: linear-gradient(135deg,#0f172a,#1e3a5f);
+    color: #fff; border-radius: 16px; padding: 2rem;
+    text-align: center; margin: 2rem 0;
+  }
+  .conclusion-box h3 { color: #4fc3f7; margin-bottom: .8rem; }
+
+  /* ── Print ── */
+  @media print {
+    @page { size: A4; margin: 1.5cm 2cm; }
+    body  { font-size: 10.5pt; }
+    .cover { min-height: auto; padding: 4cm 3cm; }
+    pre   { font-size: 7.5pt; }
+  }
+</style>
+</head>
+<body>
+
+<!-- ═══════════════════════════════════════════════ COVER ═══ -->
+<div class="cover">
+  <div class="badge-top">Tugas Besar &bull; Algoritma &amp; Pemrograman</div>
+  <h1>Futsal<span>Book</span></h1>
+  <p class="subtitle">Buku Tutorial Aplikasi Web Booking Lapang Futsal<br>Berbasis Spring Boot &amp; MySQL</p>
+  <div class="author-box">
+    <p>Disusun oleh</p>
+    <h3>Farel Muhammad Hodoril Anam</h3>
+  </div>
+  <div class="meta">
+    Program Studi Teknik Informatika &nbsp;|&nbsp; 2025 / 2026<br>
+    Teknologi: Java 21 &middot; Spring Boot 3.2 &middot; MySQL &middot; Thymeleaf &middot; Bootstrap 5
+  </div>
+</div>
+<div class="page-break"></div>
+
+<!-- ═══════════════════════════════════════════════ DAFTAR ISI ═══ -->
+<div class="content">
+  <div class="chapter-header">
+    <div class="ch-num">Daftar Isi</div>
+    <h2>Table of Contents</h2>
+  </div>
+
+  <div class="toc-ch">BAB 1 &mdash; Pendahuluan</div>
+  <div class="toc-item"><a href="#bab1-latar">1.1 Latar Belakang</a><span class="toc-page">3</span></div>
+  <div class="toc-item"><a href="#bab1-masalah">1.2 Permasalahan</a><span class="toc-page">3</span></div>
+  <div class="toc-item"><a href="#bab1-solusi">1.3 Batasan &amp; Solusi</a><span class="toc-page">4</span></div>
+  <div class="toc-item"><a href="#bab1-tujuan">1.4 Tujuan Aplikasi</a><span class="toc-page">4</span></div>
+
+  <div class="toc-ch">BAB 2 &mdash; Tools &amp; Konfigurasi</div>
+  <div class="toc-item"><a href="#bab2-tools">2.1 Daftar Tools</a><span class="toc-page">5</span></div>
+  <div class="toc-item"><a href="#bab2-java">2.2 Instalasi Java 21</a><span class="toc-page">5</span></div>
+  <div class="toc-item"><a href="#bab2-vscode">2.3 Setup VS Code</a><span class="toc-page">6</span></div>
+  <div class="toc-item"><a href="#bab2-xampp">2.4 Setup XAMPP &amp; phpMyAdmin</a><span class="toc-page">7</span></div>
+  <div class="toc-item"><a href="#bab2-git">2.5 Git &amp; GitHub</a><span class="toc-page">8</span></div>
+  <div class="toc-item"><a href="#bab2-maven">2.6 Maven Wrapper</a><span class="toc-page">8</span></div>
+
+  <div class="toc-ch">BAB 3 &mdash; Struktur Proyek &amp; Cara Kerja Aplikasi</div>
+  <div class="toc-item"><a href="#bab3-struktur">3.1 Struktur Direktori</a><span class="toc-page">9</span></div>
+  <div class="toc-item"><a href="#bab3-arsitektur">3.2 Arsitektur Aplikasi (MVC)</a><span class="toc-page">10</span></div>
+  <div class="toc-item"><a href="#bab3-db">3.3 Koneksi ke Database MySQL</a><span class="toc-page">11</span></div>
+  <div class="toc-item"><a href="#bab3-model">3.4 Model / Entity JPA</a><span class="toc-page">12</span></div>
+  <div class="toc-item"><a href="#bab3-repo">3.5 Repository Layer</a><span class="toc-page">14</span></div>
+  <div class="toc-item"><a href="#bab3-service">3.6 Service Layer</a><span class="toc-page">15</span></div>
+  <div class="toc-item"><a href="#bab3-auth">3.7 Controller Auth (Login / Logout)</a><span class="toc-page">17</span></div>
+  <div class="toc-item"><a href="#bab3-user">3.8 Controller User (Dashboard &amp; Booking)</a><span class="toc-page">18</span></div>
+  <div class="toc-item"><a href="#bab3-admin">3.9 Controller Admin</a><span class="toc-page">20</span></div>
+  <div class="toc-item"><a href="#bab3-template">3.10 Template Thymeleaf</a><span class="toc-page">22</span></div>
+
+  <div class="toc-ch">BAB 4 &mdash; Cara Menjalankan Proyek</div>
+  <div class="toc-item"><a href="#bab4-clone">4.1 Clone / Download Proyek</a><span class="toc-page">26</span></div>
+  <div class="toc-item"><a href="#bab4-db">4.2 Persiapan Database</a><span class="toc-page">26</span></div>
+  <div class="toc-item"><a href="#bab4-run">4.3 Menjalankan Aplikasi</a><span class="toc-page">27</span></div>
+  <div class="toc-item"><a href="#bab4-ss">4.4 Screenshot Aplikasi</a><span class="toc-page">27</span></div>
+
+  <div class="toc-ch">BAB 5 &mdash; Penutup</div>
+  <div class="toc-item"><a href="#bab5-kesimpulan">5.1 Kesimpulan</a><span class="toc-page">31</span></div>
+  <div class="toc-item"><a href="#bab5-saran">5.2 Saran</a><span class="toc-page">32</span></div>
+</div>
+<div class="page-break"></div>
+
+<!-- ═══════════════════════════════════════════════ BAB 1 ═══ -->
+<div class="content">
+  <div class="chapter-header">
+    <div class="ch-num">Bab 1</div>
+    <h2>Pendahuluan</h2>
+    <p>Latar belakang, permasalahan, dan tujuan pembangunan aplikasi FutsalBook</p>
+  </div>
+
+  <h2 id="bab1-latar">1.1 Latar Belakang</h2>
+  <p>Olahraga futsal semakin populer di Indonesia. Hampir setiap kota memiliki puluhan lapangan futsal yang beroperasi setiap hari. Namun proses pemesanan lapangan (booking) masih sering dilakukan secara konvensional — melalui telepon, WhatsApp, atau datang langsung ke lokasi. Cara ini tidak efisien karena:</p>
+  <ul style="margin-bottom:.8rem; padding-left:1.4rem;">
+    <li>Pelanggan harus menghubungi pengelola satu per satu untuk mengecek ketersediaan.</li>
+    <li>Tidak ada riwayat booking yang tersimpan secara terstruktur.</li>
+    <li>Pengelola kesulitan memantau jadwal penggunaan lapangan secara real-time.</li>
+    <li>Risiko double-booking (dua penyewa memesan slot yang sama) sangat tinggi.</li>
+  </ul>
+  <p>Aplikasi <strong>FutsalBook</strong> hadir sebagai solusi digital berbasis web yang memungkinkan pelanggan melakukan booking lapangan secara mandiri, kapan saja dan di mana saja, serta memudahkan admin dalam mengelola data lapangan, pelanggan, dan jadwal.</p>
+
+  <h2 id="bab1-masalah">1.2 Permasalahan</h2>
+  <p>Berdasarkan latar belakang di atas, masalah utama yang diselesaikan oleh FutsalBook adalah:</p>
+
+  <table>
+    <tr><th>#</th><th>Masalah</th><th>Dampak</th></tr>
+    <tr><td>1</td><td>Booking masih manual (telepon / WA)</td><td>Lambat, tidak efisien, rawan human error</td></tr>
+    <tr><td>2</td><td>Tidak ada sistem konflik jadwal</td><td>Double-booking, pelanggan kecewa</td></tr>
+    <tr><td>3</td><td>Admin tidak punya dashboard terpusat</td><td>Sulit memantau booking harian</td></tr>
+    <tr><td>4</td><td>Data pelanggan tidak terorganisir</td><td>Tidak bisa analitik atau follow-up</td></tr>
+    <tr><td>5</td><td>Tidak ada persistensi data digital</td><td>Data hilang jika buku/WA rusak</td></tr>
+  </table>
+
+  <h2 id="bab1-solusi">1.3 Batasan Masalah &amp; Solusi</h2>
+  <div class="box info">
+    <strong>📌 Batasan Masalah</strong>
+    Aplikasi ini fokus pada fitur inti booking lapangan. Pembayaran online, notifikasi email/SMS, dan rating lapangan <strong>tidak termasuk</strong> dalam scope tugas besar ini.
+  </div>
+
+  <table>
+    <tr><th>Batasan</th><th>Solusi yang Diterapkan</th></tr>
+    <tr><td>Hanya lapangan futsal indoor</td><td>Data lapang dikelola oleh admin via dashboard</td></tr>
+    <tr><td>Satu akun = satu peran (USER / ADMIN)</td><td>Peran ditentukan saat registrasi, admin hardcoded</td></tr>
+    <tr><td>Deteksi konflik berdasarkan lapangId + tanggal + jam</td><td>Query JPQL custom <code>isAvailable()</code> di repository</td></tr>
+    <tr><td>Password disimpan plain text (tidak di-hash)</td><td>Cukup untuk lingkungan demo/akademik</td></tr>
+    <tr><td>Foto lapang disimpan di disk lokal (/uploads)</td><td>WebConfig meng-expose folder via URL <code>/uploads/**</code></td></tr>
+  </table>
+
+  <h2 id="bab1-tujuan">1.4 Tujuan Aplikasi</h2>
+  <div class="step"><div class="num">1</div><div><strong>Menyediakan platform booking online</strong> — pelanggan dapat memesan lapangan kapan saja tanpa perlu menelepon pengelola.</div></div>
+  <div class="step"><div class="num">2</div><div><strong>Mencegah double-booking</strong> — sistem otomatis menolak pesanan jika lapangan sudah terisi pada rentang waktu yang sama.</div></div>
+  <div class="step"><div class="num">3</div><div><strong>Menyediakan dashboard admin</strong> — pengelola dapat memantau seluruh booking, mengelola lapangan, mengupload foto, dan mengelola akun pelanggan.</div></div>
+  <div class="step"><div class="num">4</div><div><strong>Persistensi data dengan MySQL</strong> — data tidak hilang saat aplikasi di-restart; semua tersimpan di database relasional.</div></div>
+</div>
+<div class="page-break"></div>
+
+<!-- ═══════════════════════════════════════════════ BAB 2 ═══ -->
+<div class="content">
+  <div class="chapter-header">
+    <div class="ch-num">Bab 2</div>
+    <h2>Tools &amp; Konfigurasi</h2>
+    <p>Daftar lengkap semua software yang dibutuhkan beserta cara instalasi dan konfigurasinya</p>
+  </div>
+
+  <h2 id="bab2-tools">2.1 Daftar Tools yang Diperlukan</h2>
+  <table>
+    <tr><th>Software</th><th>Versi</th><th>Fungsi</th><th>Download</th></tr>
+    <tr><td><strong>Java JDK</strong></td><td>21 (LTS)</td><td>Runtime &amp; compiler Java</td><td>adoptium.net</td></tr>
+    <tr><td><strong>VS Code</strong></td><td>1.90+</td><td>IDE / editor kode</td><td>code.visualstudio.com</td></tr>
+    <tr><td><strong>XAMPP</strong></td><td>8.2+</td><td>MySQL + phpMyAdmin server lokal</td><td>apachefriends.org</td></tr>
+    <tr><td><strong>Git</strong></td><td>2.44+</td><td>Version control</td><td>git-scm.com</td></tr>
+    <tr><td><strong>Maven Wrapper</strong></td><td>3.9.8</td><td>Build tool (sudah include di proyek)</td><td>&mdash; (bundled)</td></tr>
+    <tr><td><strong>Extension Pack for Java</strong></td><td>latest</td><td>VS Code extension untuk Java</td><td>VS Code Marketplace</td></tr>
+    <tr><td><strong>Spring Boot Dashboard</strong></td><td>latest</td><td>Run Spring Boot dari VS Code</td><td>VS Code Marketplace</td></tr>
+  </table>
+
+  <h2 id="bab2-java">2.2 Instalasi Java 21 (JDK)</h2>
+  <div class="step"><div class="num">1</div><div>Buka browser, kunjungi <strong>https://adoptium.net</strong> dan pilih <strong>Temurin 21 (LTS)</strong> sesuai OS (Windows x64).</div></div>
+  <div class="step"><div class="num">2</div><div>Download installer <code>.msi</code> dan jalankan. Centang opsi <strong>"Set JAVA_HOME variable"</strong> dan <strong>"Add to PATH"</strong>.</div></div>
+  <div class="step"><div class="num">3</div><div>Verifikasi di Command Prompt / PowerShell:
+<pre>java -version
+<span class="cm"># Output yang diharapkan:</span>
+openjdk version "21.0.x" ...
+javac 21.0.x</pre>
+  </div></div>
+  <div class="box warning">
+    <strong>⚠️ Catatan</strong>
+    Pastikan versi Java minimal 21 karena aplikasi ini menggunakan <code>maven.compiler.release=21</code> dan Spring Boot 3.2. Java 17 mungkin tidak kompatibel.
+  </div>
+
+  <h2 id="bab2-vscode">2.3 Setup VS Code untuk Java &amp; Spring Boot</h2>
+  <div class="step"><div class="num">1</div><div>Download dan install VS Code dari <strong>https://code.visualstudio.com</strong>.</div></div>
+  <div class="step"><div class="num">2</div><div>Buka VS Code → tekan <code>Ctrl+Shift+X</code> → install extension berikut:
+    <ul style="margin-top:.4rem; padding-left:1.4rem;">
+      <li><strong>Extension Pack for Java</strong> (Microsoft) — bundle 6 extension Java</li>
+      <li><strong>Spring Boot Extension Pack</strong> (VMware) — Spring Boot Dashboard + Tools</li>
+      <li><strong>Lombok Annotations Support</strong> (optional)</li>
+    </ul>
+  </div></div>
+  <div class="step"><div class="num">3</div><div>Konfigurasi JDK di VS Code: tekan <code>Ctrl+Shift+P</code> → ketik <strong>"Java: Configure Java Runtime"</strong> → pilih JDK 21.</div></div>
+  <div class="step"><div class="num">4</div><div>Buka folder proyek: <code>File → Open Folder → pilih folder <strong>web</strong></code>.</div></div>
+  <div class="step"><div class="num">5</div><div>VS Code akan otomatis mendeteksi proyek Maven dan men-download dependency. Tunggu hingga progress bar di bawah selesai.</div></div>
+
+  <h3>Konfigurasi settings.json (opsional tapi direkomendasikan)</h3>
+  <pre>{
+  <span class="str">"java.jdt.ls.java.home"</span>: <span class="str">"C:\\Program Files\\Eclipse Adoptium\\jdk-21..."</span>,
+  <span class="str">"java.compile.nullAnalysis.mode"</span>: <span class="str">"disabled"</span>,
+  <span class="str">"editor.formatOnSave"</span>: <span class="kw">true</span>,
+  <span class="str">"editor.tabSize"</span>: <span class="num">4</span>
+}</pre>
+
+  <h2 id="bab2-xampp">2.4 Setup XAMPP &amp; phpMyAdmin (MySQL)</h2>
+  <div class="step"><div class="num">1</div><div>Download XAMPP dari <strong>https://www.apachefriends.org</strong> → pilih versi PHP 8.2.</div></div>
+  <div class="step"><div class="num">2</div><div>Install ke <code>C:\xampp</code> (default). Saat instalasi, pastikan <strong>MySQL</strong> dan <strong>phpMyAdmin</strong> dicentang.</div></div>
+  <div class="step"><div class="num">3</div><div>Buka <strong>XAMPP Control Panel</strong> → klik <strong>Start</strong> pada baris <strong>MySQL</strong>. Status akan berubah hijau.</div></div>
+  <div class="step"><div class="num">4</div><div>Verifikasi MySQL berjalan: buka browser → <strong>http://localhost/phpmyadmin</strong>. Tampilan phpMyAdmin harus muncul.</div></div>
+  <div class="step"><div class="num">5</div><div>Konfigurasi default XAMPP MySQL yang digunakan aplikasi:
+    <table style="margin-top:.5rem;">
+      <tr><th>Parameter</th><th>Nilai</th></tr>
+      <tr><td>Host</td><td>localhost</td></tr>
+      <tr><td>Port</td><td>3306</td></tr>
+      <tr><td>Username</td><td>root</td></tr>
+      <tr><td>Password</td><td>(kosong)</td></tr>
+    </table>
+  </div></div>
+  <div class="box success">
+    <strong>✅ Database Dibuat Otomatis</strong>
+    Saat aplikasi Spring Boot pertama kali dijalankan, database <code>futsalbook_db</code> dan seluruh tabelnya akan dibuat otomatis berkat konfigurasi <code>createDatabaseIfNotExist=true</code> dan <code>ddl-auto=update</code>.
+  </div>
+
+  <h2 id="bab2-git">2.5 Git &amp; GitHub</h2>
+  <div class="step"><div class="num">1</div><div>Download Git dari <strong>https://git-scm.com</strong> dan install dengan pengaturan default.</div></div>
+  <div class="step"><div class="num">2</div><div>Konfigurasi identitas Git di terminal:
+<pre>git config --global user.name  <span class="str">"Nama Anda"</span>
+git config --global user.email <span class="str">"email@anda.com"</span></pre>
+  </div></div>
+  <div class="step"><div class="num">3</div><div>Buat akun di <strong>https://github.com</strong>, lalu buat repository baru bernama <code>futsalbook</code>.</div></div>
+  <div class="step"><div class="num">4</div><div>Push proyek ke GitHub:
+<pre>git init
+git add .
+git commit -m <span class="str">"initial commit: FutsalBook Spring Boot"</span>
+git remote add origin https://github.com/USERNAME/futsalbook.git
+git push -u origin main</pre>
+  </div></div>
+
+  <h2 id="bab2-maven">2.6 Maven Wrapper</h2>
+  <p>Proyek sudah dilengkapi <strong>Maven Wrapper</strong> (<code>mvnw.cmd</code>), sehingga Anda tidak perlu menginstall Maven secara terpisah. Maven akan didownload otomatis saat pertama kali dijalankan.</p>
+<pre><span class="cm"># Windows CMD / PowerShell</span>
+mvnw.cmd clean compile      <span class="cm"># compile saja</span>
+mvnw.cmd spring-boot:run    <span class="cm"># compile + jalankan</span>
+mvnw.cmd clean package      <span class="cm"># buat file JAR</span></pre>
+</div>
+<div class="page-break"></div>
+
+<!-- ═══════════════════════════════════════════════ BAB 3 ═══ -->
+<div class="content">
+  <div class="chapter-header">
+    <div class="ch-num">Bab 3</div>
+    <h2>Struktur Proyek &amp; Cara Kerja Aplikasi</h2>
+    <p>Penjelasan arsitektur, kode sumber, dan koneksi database secara mendetail</p>
+  </div>
+
+  <h2 id="bab3-struktur">3.1 Struktur Direktori Proyek</h2>
+  <div class="file-tree">
+<span class="dir">web/</span>
+├── <span class="dir">src/main/java/com/tugas/web/</span>
+│   ├── <span class="dir">config/</span>
+│   │   └── <span class="file">WebConfig.java</span>          <span style="color:#546e7a;">← resource handler /uploads/**</span>
+│   ├── <span class="dir">controller/</span>
+│   │   ├── <span class="file">AuthController.java</span>     <span style="color:#546e7a;">← login, logout</span>
+│   │   ├── <span class="file">UserController.java</span>     <span style="color:#546e7a;">← register, dashboard, booking</span>
+│   │   ├── <span class="file">AdminController.java</span>    <span style="color:#546e7a;">← CRUD lapang, user, booking admin</span>
+│   │   └── <span class="file">HomeController.java</span>     <span style="color:#546e7a;">← redirect / ke /login</span>
+│   ├── <span class="dir">model/</span>
+│   │   ├── <span class="new">User.java</span>               <span style="color:#546e7a;">← @Entity tabel users</span>
+│   │   ├── <span class="new">Lapang.java</span>             <span style="color:#546e7a;">← @Entity tabel lapang</span>
+│   │   └── <span class="new">Booking.java</span>            <span style="color:#546e7a;">← @Entity tabel bookings</span>
+│   ├── <span class="dir">repository/</span>               <span style="color:#ffcb6b;">← NEW: JPA Repositories</span>
+│   │   ├── <span class="new">UserRepository.java</span>
+│   │   ├── <span class="new">LapangRepository.java</span>
+│   │   └── <span class="new">BookingRepository.java</span>
+│   ├── <span class="dir">service/</span>
+│   │   └── <span class="file">AppDataService.java</span>     <span style="color:#546e7a;">← business logic + data access</span>
+│   └── <span class="file">WebApplication.java</span>         <span style="color:#546e7a;">← entry point @SpringBootApplication</span>
+├── <span class="dir">src/main/resources/</span>
+│   ├── <span class="file">application.properties</span>      <span style="color:#546e7a;">← config datasource, JPA, multipart</span>
+│   └── <span class="dir">templates/</span>
+│       ├── <span class="file">login.html</span>
+│       ├── <span class="file">register.html</span>
+│       ├── <span class="file">home.html</span>               <span style="color:#546e7a;">← halaman booking lapang</span>
+│       ├── <span class="file">dashboard.html</span>          <span style="color:#546e7a;">← dashboard pelanggan</span>
+│       └── <span class="file">admin-dashboard.html</span>    <span style="color:#546e7a;">← dashboard admin (tab)</span>
+├── <span class="dir">uploads/</span>                        <span style="color:#546e7a;">← foto lapang (lapang-1.jpg, dll)</span>
+└── <span class="file">pom.xml</span>                         <span style="color:#546e7a;">← dependencies Maven</span>
+  </div>
+
+  <h2 id="bab3-arsitektur">3.2 Arsitektur Aplikasi (MVC + Repository Pattern)</h2>
+  <p>Aplikasi mengikuti pola <strong>MVC (Model-View-Controller)</strong> yang diperluas dengan <strong>Repository Pattern</strong> untuk akses database.</p>
+
+  <div style="background:#f8fafc;border-radius:12px;padding:1.4rem;margin:1rem 0;font-family:'Fira Code',monospace;font-size:8.5pt;line-height:2;">
+    <div style="text-align:center;font-weight:700;font-size:10pt;margin-bottom:.5rem;color:#1e3a5f;">Alur Request → Response</div>
+    <div style="text-align:center;color:#334155;">
+      🌐 Browser (HTML Form)<br>
+      ↕ HTTP Request/Response<br>
+      🎮 <strong style="color:#1565c0;">Controller Layer</strong> (AuthController, UserController, AdminController)<br>
+      ↕ Method calls<br>
+      ⚙️ <strong style="color:#1565c0;">Service Layer</strong> (AppDataService)<br>
+      ↕ Repository calls<br>
+      🗄️ <strong style="color:#1565c0;">Repository Layer</strong> (JpaRepository interfaces)<br>
+      ↕ JPQL / SQL<br>
+      💾 <strong style="color:#1565c0;">MySQL Database</strong> (via Hibernate/JPA)<br>
+    </div>
+  </div>
+
+  <h3>Dependencies Utama (pom.xml)</h3>
+<pre>&lt;<span class="cls">dependencies</span>&gt;
+  <span class="cm">&lt;!-- Web MVC --&gt;</span>
+  &lt;<span class="cls">dependency</span>&gt;
+    &lt;<span class="cls">groupId</span>&gt;org.springframework.boot&lt;/<span class="cls">groupId</span>&gt;
+    &lt;<span class="cls">artifactId</span>&gt;spring-boot-starter-web&lt;/<span class="cls">artifactId</span>&gt;
+  &lt;/<span class="cls">dependency</span>&gt;
+  <span class="cm">&lt;!-- Thymeleaf Template Engine --&gt;</span>
+  &lt;<span class="cls">dependency</span>&gt;
+    &lt;<span class="cls">groupId</span>&gt;org.springframework.boot&lt;/<span class="cls">groupId</span>&gt;
+    &lt;<span class="cls">artifactId</span>&gt;spring-boot-starter-thymeleaf&lt;/<span class="cls">artifactId</span>&gt;
+  &lt;/<span class="cls">dependency</span>&gt;
+  <span class="cm">&lt;!-- JPA / Hibernate --&gt;</span>
+  &lt;<span class="cls">dependency</span>&gt;
+    &lt;<span class="cls">groupId</span>&gt;org.springframework.boot&lt;/<span class="cls">groupId</span>&gt;
+    &lt;<span class="cls">artifactId</span>&gt;spring-boot-starter-data-jpa&lt;/<span class="cls">artifactId</span>&gt;
+  &lt;/<span class="cls">dependency</span>&gt;
+  <span class="cm">&lt;!-- MySQL Connector --&gt;</span>
+  &lt;<span class="cls">dependency</span>&gt;
+    &lt;<span class="cls">groupId</span>&gt;com.mysql&lt;/<span class="cls">groupId</span>&gt;
+    &lt;<span class="cls">artifactId</span>&gt;mysql-connector-j&lt;/<span class="cls">artifactId</span>&gt;
+    &lt;<span class="cls">scope</span>&gt;runtime&lt;/<span class="cls">scope</span>&gt;
+  &lt;/<span class="cls">dependency</span>&gt;
+&lt;/<span class="cls">dependencies</span>&gt;</pre>
+</div>
+
+<div class="content">
+  <h2 id="bab3-db">3.3 Koneksi ke Database MySQL</h2>
+  <p>Konfigurasi koneksi database dilakukan di file <code>application.properties</code>. Spring Boot akan membaca file ini saat startup dan mengkonfigurasi koneksi secara otomatis.</p>
+
+  <h3>File: src/main/resources/application.properties</h3>
+<pre><span class="cm"># ─── Thymeleaf ────────────────────────────</span>
+spring.thymeleaf.cache=<span class="kw">false</span>
+
+<span class="cm"># ─── Upload File ──────────────────────────</span>
+spring.servlet.multipart.enabled=<span class="kw">true</span>
+spring.servlet.multipart.max-file-size=<span class="num">5MB</span>
+spring.servlet.multipart.max-request-size=<span class="num">5MB</span>
+
+<span class="cm"># ─── MySQL (XAMPP) ────────────────────────</span>
+spring.datasource.url=jdbc:mysql://localhost:<span class="num">3306</span>/futsalbook_db\
+  ?createDatabaseIfNotExist=<span class="kw">true</span>&amp;useSSL=<span class="kw">false</span>&amp;serverTimezone=Asia/Jakarta
+spring.datasource.username=<span class="str">root</span>
+spring.datasource.password=
+spring.datasource.driver-class-name=com.mysql.cj.jdbc.Driver
+
+<span class="cm"># ─── JPA / Hibernate ──────────────────────</span>
+spring.jpa.hibernate.ddl-auto=<span class="str">update</span>    <span class="cm"># buat/update tabel otomatis</span>
+spring.jpa.show-sql=<span class="kw">true</span>                <span class="cm"># tampilkan SQL di console</span>
+spring.jpa.properties.hibernate.dialect=org.hibernate.dialect.MySQLDialect
+spring.jpa.properties.hibernate.format_sql=<span class="kw">true</span></pre>
+
+  <div class="box info">
+    <strong>💡 Penjelasan Parameter Penting</strong>
+    <ul style="padding-left:1.2rem; margin-top:.3rem;">
+      <li><code>createDatabaseIfNotExist=true</code> — MySQL otomatis membuat database <code>futsalbook_db</code> jika belum ada.</li>
+      <li><code>ddl-auto=update</code> — Hibernate otomatis membuat atau mengupdate struktur tabel berdasarkan entity class.</li>
+      <li><code>show-sql=true</code> — Setiap query yang dieksekusi dicetak di console, berguna untuk debugging.</li>
+    </ul>
+  </div>
+
+  <h3>Serve File Upload (WebConfig.java)</h3>
+  <p>Secara default Spring Boot tidak otomatis meng-expose folder di luar <code>resources/static</code>. File <code>WebConfig.java</code> menambahkan resource handler agar foto yang diupload bisa diakses via URL <code>/uploads/nama-file.jpg</code>.</p>
+
+<pre><span class="an">@Configuration</span>
+<span class="kw">public class</span> <span class="cls">WebConfig</span> <span class="kw">implements</span> <span class="cls">WebMvcConfigurer</span> {
+
+  <span class="an">@Override</span>
+  <span class="kw">public void</span> <span class="fn">addResourceHandlers</span>(<span class="cls">ResourceHandlerRegistry</span> registry) {
+    <span class="cls">Path</span> uploadDir = <span class="cls">Paths</span>.get(<span class="str">"uploads"</span>);
+    <span class="cls">String</span> uploadPath = uploadDir.toAbsolutePath().toUri().toString();
+
+    registry.addResourceHandler(<span class="str">"/uploads/**"</span>)
+            .addResourceLocations(uploadPath + <span class="str">"/"</span>);
+  }
+}</pre>
+
+  <h2 id="bab3-model">3.4 Model / Entity JPA</h2>
+  <p>Setiap class model dikonversi menjadi <strong>JPA Entity</strong> sehingga Hibernate dapat memetakannya ke tabel database secara otomatis.</p>
+
+  <h3>User.java — Tabel <code>users</code></h3>
+<pre><span class="an">@Entity</span>
+<span class="an">@Table</span>(name = <span class="str">"users"</span>)
+<span class="kw">public class</span> <span class="cls">User</span> {
+
+  <span class="an">@Id</span>
+  <span class="an">@GeneratedValue</span>(strategy = <span class="cls">GenerationType</span>.IDENTITY)
+  <span class="kw">private</span> <span class="cls">Long</span> id;              <span class="cm">// auto-increment</span>
+
+  <span class="an">@Column</span>(unique = <span class="kw">true</span>, nullable = <span class="kw">false</span>)
+  <span class="kw">private</span> <span class="cls">String</span> username;
+
+  <span class="an">@Column</span>(nullable = <span class="kw">false</span>)
+  <span class="kw">private</span> <span class="cls">String</span> password;
+
+  <span class="an">@Column</span>(nullable = <span class="kw">false</span>)
+  <span class="kw">private</span> <span class="cls">String</span> role;           <span class="cm">// "USER" atau "ADMIN"</span>
+
+  <span class="kw">private</span> <span class="cls">String</span> email;
+  <span class="kw">private</span> <span class="cls">String</span> phone;
+
+  <span class="an">@Column</span>(name = <span class="str">"registered_at"</span>)
+  <span class="kw">private</span> <span class="cls">LocalDateTime</span> registeredAt;
+
+  <span class="cm">// Helper method — tidak di-persist ke DB</span>
+  <span class="kw">public</span> <span class="cls">String</span> <span class="fn">getUsernameInitial</span>() {
+    <span class="kw">if</span> (username == <span class="kw">null</span> || username.isEmpty()) <span class="kw">return</span> <span class="str">"?"</span>;
+    <span class="kw">return</span> username.substring(<span class="num">0</span>, <span class="num">1</span>).toUpperCase();
+  }
+}</pre>
+
+  <h3>Lapang.java — Tabel <code>lapang</code></h3>
+<pre><span class="an">@Entity</span>
+<span class="an">@Table</span>(name = <span class="str">"lapang"</span>)
+<span class="kw">public class</span> <span class="cls">Lapang</span> {
+
+  <span class="an">@Id</span>
+  <span class="an">@GeneratedValue</span>(strategy = <span class="cls">GenerationType</span>.IDENTITY)
+  <span class="kw">private</span> <span class="cls">Long</span> id;
+
+  <span class="an">@Column</span>(nullable = <span class="kw">false</span>)
+  <span class="kw">private</span> <span class="cls">String</span> name;
+
+  <span class="an">@Column</span>(name = <span class="str">"photo_path"</span>)
+  <span class="kw">private</span> <span class="cls">String</span> photoPath;      <span class="cm">// e.g. "lapang-1.jpg"</span>
+
+  <span class="cm">// Menghasilkan URL foto dengan fallback ke placeholder</span>
+  <span class="kw">public</span> <span class="cls">String</span> <span class="fn">getPhotoUrl</span>() {
+    <span class="kw">if</span> (photoPath == <span class="kw">null</span> || photoPath.isBlank()) {
+      <span class="kw">return</span> <span class="str">"https://placehold.co/400x220/1a1a2e/4fc3f7?text="</span>
+             + name.replace(<span class="str">" "</span>, <span class="str">"+"</span>);
+    }
+    <span class="kw">return</span> <span class="str">"/uploads/"</span> + photoPath;
+  }
+}</pre>
+
+  <h3>Booking.java — Tabel <code>bookings</code></h3>
+<pre><span class="an">@Entity</span>
+<span class="an">@Table</span>(name = <span class="str">"bookings"</span>)
+<span class="kw">public class</span> <span class="cls">Booking</span> {
+
+  <span class="an">@Id</span>
+  <span class="an">@GeneratedValue</span>(strategy = <span class="cls">GenerationType</span>.IDENTITY)
+  <span class="kw">private</span> <span class="cls">Long</span> id;
+
+  <span class="an">@Column</span>(name = <span class="str">"lapang_id"</span>,   nullable = <span class="kw">false</span>) <span class="kw">private</span> <span class="cls">Long</span>          lapangId;
+  <span class="an">@Column</span>(name = <span class="str">"lapang_name"</span>, nullable = <span class="kw">false</span>) <span class="kw">private</span> <span class="cls">String</span>        lapangName;
+  <span class="an">@Column</span>(nullable = <span class="kw">false</span>)                         <span class="kw">private</span> <span class="cls">String</span>        username;
+  <span class="an">@Column</span>(nullable = <span class="kw">false</span>)                         <span class="kw">private</span> <span class="cls">LocalDate</span>     date;
+  <span class="an">@Column</span>(name = <span class="str">"start_time"</span>, nullable = <span class="kw">false</span>) <span class="kw">private</span> <span class="cls">LocalTime</span>     startTime;
+  <span class="an">@Column</span>(name = <span class="str">"end_time"</span>,   nullable = <span class="kw">false</span>) <span class="kw">private</span> <span class="cls">LocalTime</span>     endTime;
+  <span class="an">@Column</span>(name = <span class="str">"created_at"</span>)                     <span class="kw">private</span> <span class="cls">LocalDateTime</span> createdAt;
+}</pre>
+</div>
+
+<div class="content">
+  <h2 id="bab3-repo">3.5 Repository Layer</h2>
+  <p>Setiap entity memiliki interface repository yang meng-extend <code>JpaRepository</code>. Spring Data JPA otomatis mengimplementasikan CRUD dasar, serta query yang diderivasi dari nama method.</p>
+
+  <h3>UserRepository.java</h3>
+<pre><span class="an">@Repository</span>
+<span class="kw">public interface</span> <span class="cls">UserRepository</span> <span class="kw">extends</span> <span class="cls">JpaRepository</span>&lt;<span class="cls">User</span>, <span class="cls">Long</span>&gt; {
+
+  <span class="cls">Optional</span>&lt;<span class="cls">User</span>&gt; <span class="fn">findByUsername</span>(<span class="cls">String</span> username);
+
+  <span class="cls">Optional</span>&lt;<span class="cls">User</span>&gt; <span class="fn">findByUsernameAndPassword</span>(<span class="cls">String</span> username, <span class="cls">String</span> password);
+
+  <span class="kw">boolean</span> <span class="fn">existsByUsername</span>(<span class="cls">String</span> username);
+
+  <span class="cls">List</span>&lt;<span class="cls">User</span>&gt; <span class="fn">findByRole</span>(<span class="cls">String</span> role);
+}</pre>
+
+  <h3>BookingRepository.java — dengan Custom Query</h3>
+<pre><span class="an">@Repository</span>
+<span class="kw">public interface</span> <span class="cls">BookingRepository</span> <span class="kw">extends</span> <span class="cls">JpaRepository</span>&lt;<span class="cls">Booking</span>, <span class="cls">Long</span>&gt; {
+
+  <span class="cls">List</span>&lt;<span class="cls">Booking</span>&gt; <span class="fn">findByUsernameOrderByCreatedAtDesc</span>(<span class="cls">String</span> username);
+  <span class="cls">List</span>&lt;<span class="cls">Booking</span>&gt; <span class="fn">findByDateOrderByStartTimeAsc</span>(<span class="cls">LocalDate</span> date);
+  <span class="cls">List</span>&lt;<span class="cls">Booking</span>&gt; <span class="fn">findAllByOrderByCreatedAtDesc</span>();
+
+  <span class="cm">// Query JPQL untuk cek konflik jadwal</span>
+  <span class="an">@Query</span>(<span class="str">"SELECT CASE WHEN COUNT(b) > 0 THEN false ELSE true END "</span> +
+         <span class="str">"FROM Booking b WHERE b.lapangId = :lapangId AND b.date = :date "</span> +
+         <span class="str">"AND b.startTime &lt; :endTime AND :startTime &lt; b.endTime"</span>)
+  <span class="kw">boolean</span> <span class="fn">isAvailable</span>(<span class="an">@Param</span>(<span class="str">"lapangId"</span>)  <span class="cls">Long</span>      lapangId,
+                      <span class="an">@Param</span>(<span class="str">"date"</span>)      <span class="cls">LocalDate</span> date,
+                      <span class="an">@Param</span>(<span class="str">"startTime"</span>) <span class="cls">LocalTime</span> startTime,
+                      <span class="an">@Param</span>(<span class="str">"endTime"</span>)   <span class="cls">LocalTime</span> endTime);
+}</pre>
+
+  <div class="box info">
+    <strong>💡 Logika Deteksi Konflik Jadwal</strong>
+    Query <code>isAvailable()</code> menggunakan kondisi <em>interval overlap</em>: dua interval [A, B) dan [C, D) saling tumpang tindih jika <code>A &lt; D AND C &lt; B</code>. Jika ada booking yang tumpang tindih → return false (tidak tersedia).
+  </div>
+
+  <h2 id="bab3-service">3.6 Service Layer — AppDataService.java</h2>
+  <p>Service adalah jembatan antara controller dan repository. Semua logika bisnis ditaruh di sini.</p>
+
+  <h3>Struktur Kelas &amp; Inisialisasi Data</h3>
+<pre><span class="an">@Service</span>
+<span class="kw">public class</span> <span class="cls">AppDataService</span> {
+
+  <span class="an">@Autowired</span> <span class="kw">private</span> <span class="cls">LapangRepository</span>  lapangRepository;
+  <span class="an">@Autowired</span> <span class="kw">private</span> <span class="cls">UserRepository</span>    userRepository;
+  <span class="an">@Autowired</span> <span class="kw">private</span> <span class="cls">BookingRepository</span> bookingRepository;
+
+  <span class="cm">// Dijalankan satu kali saat aplikasi start</span>
+  <span class="an">@PostConstruct</span>
+  <span class="kw">public void</span> <span class="fn">init</span>() {
+    <span class="kw">if</span> (lapangRepository.count() == <span class="num">0</span>) {
+      lapangRepository.save(<span class="kw">new</span> <span class="cls">Lapang</span>(<span class="str">"Lapang 1"</span>));
+      lapangRepository.save(<span class="kw">new</span> <span class="cls">Lapang</span>(<span class="str">"Lapang 2"</span>));
+      lapangRepository.save(<span class="kw">new</span> <span class="cls">Lapang</span>(<span class="str">"Lapang 3"</span>));
+      lapangRepository.save(<span class="kw">new</span> <span class="cls">Lapang</span>(<span class="str">"Lapang 4"</span>));
+    }
+    <span class="kw">if</span> (userRepository.count() == <span class="num">0</span>) {
+      userRepository.save(<span class="kw">new</span> <span class="cls">User</span>(<span class="str">"user1"</span>, <span class="str">"user123"</span>, <span class="str">"USER"</span>));
+    }
+  }
+}</pre>
+
+  <h3>Method Penting: addBooking()</h3>
+<pre><span class="an">@Transactional</span>
+<span class="kw">public void</span> <span class="fn">addBooking</span>(<span class="cls">Long</span> lapangId, <span class="cls">String</span> username,
+                       <span class="cls">LocalDate</span> date, <span class="cls">LocalTime</span> start, <span class="cls">LocalTime</span> end) {
+  <span class="cls">String</span> lapangName = <span class="fn">findLapangById</span>(lapangId)
+                       .map(<span class="cls">Lapang</span>::getName)
+                       .orElse(<span class="str">"Lapang tidak ditemukan"</span>);
+
+  <span class="cls">Booking</span> booking = <span class="kw">new</span> <span class="cls">Booking</span>(lapangId, lapangName, username, date, start, end);
+  bookingRepository.save(booking);  <span class="cm">// ← tersimpan ke MySQL</span>
+}</pre>
+
+  <h3>Method Penting: isLapangAvailable()</h3>
+<pre><span class="kw">public boolean</span> <span class="fn">isLapangAvailable</span>(<span class="cls">Long</span> lapangId, <span class="cls">LocalDate</span> date,
+                                   <span class="cls">LocalTime</span> start, <span class="cls">LocalTime</span> end) {
+  <span class="kw">return</span> bookingRepository.isAvailable(lapangId, date, start, end);
+}</pre>
+
+  <h3>Method Upload Foto</h3>
+<pre><span class="an">@Transactional</span>
+<span class="kw">public void</span> <span class="fn">updateLapangPhoto</span>(<span class="cls">Long</span> lapangId, <span class="cls">String</span> photoPath) {
+  <span class="fn">findLapangById</span>(lapangId).ifPresent(l -&gt; {
+    l.setPhotoPath(photoPath);
+    lapangRepository.save(l);       <span class="cm">// ← update photo_path di DB</span>
+  });
+}</pre>
+</div>
+<div class="page-break"></div>
+
+<div class="content">
+  <h2 id="bab3-auth">3.7 Controller Auth — Login &amp; Logout</h2>
+  <p>File <code>AuthController.java</code> menangani autentikasi. Admin dikenali dengan credential hardcoded; pelanggan dicek via database.</p>
+
+<pre><span class="an">@Controller</span>
+<span class="kw">public class</span> <span class="cls">AuthController</span> {
+
+  <span class="cm">// GET /login — jika sudah login, redirect langsung</span>
+  <span class="an">@GetMapping</span>(<span class="str">"/login"</span>)
+  <span class="kw">public</span> <span class="cls">String</span> <span class="fn">loginPage</span>(<span class="cls">Model</span> model, <span class="cls">HttpSession</span> session) {
+    <span class="kw">if</span> (session.getAttribute(<span class="str">"username"</span>) != <span class="kw">null</span>) {
+      <span class="kw">if</span> (<span class="str">"ADMIN"</span>.equals(session.getAttribute(<span class="str">"userRole"</span>)))
+        <span class="kw">return</span> <span class="str">"redirect:/admin/dashboard"</span>;
+      <span class="kw">return</span> <span class="str">"redirect:/dashboard"</span>;
+    }
+    <span class="kw">return</span> <span class="str">"login"</span>;
+  }
+
+  <span class="cm">// POST /proses-login</span>
+  <span class="an">@PostMapping</span>(<span class="str">"/proses-login"</span>)
+  <span class="kw">public</span> <span class="cls">String</span> <span class="fn">login</span>(<span class="an">@RequestParam</span> <span class="cls">String</span> username,
+                      <span class="an">@RequestParam</span> <span class="cls">String</span> password,
+                      <span class="cls">Model</span> model, <span class="cls">HttpSession</span> session) {
+
+    <span class="cm">// Cek admin hardcoded</span>
+    <span class="kw">if</span> (<span class="str">"admin"</span>.equals(username) &amp;&amp; <span class="str">"admin123"</span>.equals(password)) {
+      session.setAttribute(<span class="str">"username"</span>, username);
+      session.setAttribute(<span class="str">"userRole"</span>, <span class="str">"ADMIN"</span>);
+      <span class="kw">return</span> <span class="str">"redirect:/admin/dashboard"</span>;
+    }
+    <span class="cm">// Cek user di database</span>
+    var userOpt = appDataService.findUser(username, password);
+    <span class="kw">if</span> (userOpt.isPresent()) {
+      session.setAttribute(<span class="str">"username"</span>, username);
+      session.setAttribute(<span class="str">"userRole"</span>, <span class="str">"USER"</span>);
+      <span class="kw">return</span> <span class="str">"redirect:/dashboard"</span>;
+    }
+
+    model.addAttribute(<span class="str">"errorMessage"</span>, <span class="str">"Username atau password salah."</span>);
+    <span class="kw">return</span> <span class="str">"login"</span>;
+  }
+
+  <span class="cm">// GET /logout — invalidasi session</span>
+  <span class="an">@GetMapping</span>(<span class="str">"/logout"</span>)
+  <span class="kw">public</span> <span class="cls">String</span> <span class="fn">logout</span>(<span class="cls">HttpSession</span> session) {
+    session.invalidate();
+    <span class="kw">return</span> <span class="str">"redirect:/login"</span>;
+  }
+}</pre>
+
+  <h2 id="bab3-user">3.8 Controller User — Register, Dashboard, &amp; Booking</h2>
+  <h3>Register — mencegah duplikasi username</h3>
+<pre><span class="an">@PostMapping</span>(<span class="str">"/proses-register"</span>)
+<span class="kw">public</span> <span class="cls">String</span> <span class="fn">prosesRegister</span>(<span class="an">@ModelAttribute</span> <span class="cls">User</span> user,
+                              <span class="cls">Model</span> model, <span class="cls">RedirectAttributes</span> ra) {
+  <span class="cm">// Validasi input tidak kosong</span>
+  <span class="kw">if</span> (user.getUsername().isBlank() || user.getPassword().isBlank()) {
+    model.addAttribute(<span class="str">"errorMessage"</span>, <span class="str">"Username dan password wajib diisi."</span>);
+    <span class="kw">return</span> <span class="str">"register"</span>;
+  }
+  <span class="cm">// Cek duplikasi username di database</span>
+  <span class="kw">if</span> (appDataService.existsUser(user.getUsername())) {
+    model.addAttribute(<span class="str">"errorMessage"</span>, <span class="str">"Username sudah terdaftar."</span>);
+    <span class="kw">return</span> <span class="str">"register"</span>;
+  }
+  user.setRole(<span class="str">"USER"</span>);
+  appDataService.addUser(user);     <span class="cm">// ← simpan ke MySQL</span>
+  ra.addFlashAttribute(<span class="str">"successMessage"</span>, <span class="str">"Registrasi berhasil!"</span>);
+  <span class="kw">return</span> <span class="str">"redirect:/login"</span>;
+}</pre>
+
+  <h3>Booking — alur penuh dengan cek konflik</h3>
+<pre><span class="an">@PostMapping</span>(<span class="str">"/booking"</span>)
+<span class="kw">public</span> <span class="cls">String</span> <span class="fn">createBooking</span>(<span class="an">@RequestParam</span> <span class="cls">Long</span>   lapangId,
+                             <span class="an">@RequestParam</span> <span class="cls">String</span> date,
+                             <span class="an">@RequestParam</span> <span class="cls">String</span> startTime,
+                             <span class="an">@RequestParam</span> <span class="cls">String</span> endTime,
+                             <span class="cls">HttpSession</span> session,
+                             <span class="cls">RedirectAttributes</span> ra) {
+
+  <span class="cls">String</span>    username    = (String) session.getAttribute(<span class="str">"username"</span>);
+  <span class="cls">LocalDate</span> bookingDate = LocalDate.parse(date);
+  <span class="cls">LocalTime</span> start       = LocalTime.parse(startTime);
+  <span class="cls">LocalTime</span> end         = LocalTime.parse(endTime);
+
+  <span class="cm">// Validasi: end harus setelah start</span>
+  <span class="kw">if</span> (!end.isAfter(start)) {
+    ra.addFlashAttribute(<span class="str">"errorMessage"</span>, <span class="str">"Jam selesai harus setelah jam mulai."</span>);
+    <span class="kw">return</span> <span class="str">"redirect:/home"</span>;
+  }
+  <span class="cm">// Cek ketersediaan lapang di database</span>
+  <span class="kw">if</span> (!appDataService.isLapangAvailable(lapangId, bookingDate, start, end)) {
+    ra.addFlashAttribute(<span class="str">"errorMessage"</span>, <span class="str">"Lapang sudah dibooking pada waktu tersebut."</span>);
+    <span class="kw">return</span> <span class="str">"redirect:/home"</span>;
+  }
+  appDataService.addBooking(lapangId, username, bookingDate, start, end);
+  ra.addFlashAttribute(<span class="str">"successMessage"</span>, <span class="str">"Booking berhasil dikonfirmasi!"</span>);
+  <span class="kw">return</span> <span class="str">"redirect:/home"</span>;
+}</pre>
+</div>
+
+<div class="content">
+  <h2 id="bab3-admin">3.9 Controller Admin — AdminController.java</h2>
+  <p>Semua endpoint admin diproteksi method <code>isAdmin()</code> yang mengecek nilai session <code>userRole</code>.</p>
+
+  <h3>Upload Foto Lapangan</h3>
+<pre><span class="an">@PostMapping</span>(<span class="str">"/lapang/upload-photo"</span>)
+<span class="kw">public</span> <span class="cls">String</span> <span class="fn">uploadPhoto</span>(<span class="an">@RequestParam</span> <span class="cls">Long</span>          lapangId,
+                           <span class="an">@RequestParam</span> <span class="cls">MultipartFile</span> photo,
+                           <span class="cls">HttpSession</span> session,
+                           <span class="cls">RedirectAttributes</span> ra) {
+  <span class="kw">if</span> (!isAdmin(session)) <span class="kw">return</span> <span class="str">"redirect:/login"</span>;
+
+  <span class="cm">// Validasi ekstensi file</span>
+  <span class="cls">String</span> ext = originalFilename.substring(originalFilename.lastIndexOf(<span class="str">"."</span>)).toLowerCase();
+  <span class="kw">if</span> (!ext.matches(<span class="str">"\\.(jpg|jpeg|png|gif|webp)"</span>)) {
+    ra.addFlashAttribute(<span class="str">"message"</span>, <span class="str">"Format harus JPG, PNG, GIF, atau WebP."</span>);
+    <span class="kw">return</span> <span class="str">"redirect:/admin/dashboard"</span>;
+  }
+
+  <span class="cls">Path</span> uploadPath = <span class="cls">Paths</span>.get(<span class="str">"uploads"</span>);
+  <span class="cls">Files</span>.createDirectories(uploadPath);        <span class="cm">// buat folder jika belum ada</span>
+
+  <span class="cls">String</span> fileName = <span class="str">"lapang-"</span> + lapangId + ext;
+  <span class="cls">Path</span>   filePath = uploadPath.resolve(fileName);
+  <span class="cls">Files</span>.copy(photo.getInputStream(), filePath, <span class="cls">StandardCopyOption</span>.REPLACE_EXISTING);
+
+  appDataService.updateLapangPhoto(lapangId, fileName);  <span class="cm">// ← update DB</span>
+  ra.addFlashAttribute(<span class="str">"message"</span>, <span class="str">"Foto berhasil diupload."</span>);
+  <span class="kw">return</span> <span class="str">"redirect:/admin/dashboard"</span>;
+}</pre>
+
+  <h3>populateModel() — Data Dashboard Admin</h3>
+<pre><span class="kw">private void</span> <span class="fn">populateModel</span>(<span class="cls">Model</span> model) {
+  <span class="cm">// Hitung jumlah booking per user (untuk kolom di tabel pelanggan)</span>
+  <span class="cls">Map</span>&lt;<span class="cls">String</span>, <span class="cls">Long</span>&gt; countMap = appDataService.getBookings().stream()
+      .collect(<span class="cls">Collectors</span>.groupingBy(<span class="cls">Booking</span>::getUsername, <span class="cls">Collectors</span>.counting()));
+
+  model.addAttribute(<span class="str">"lapangs"</span>,          appDataService.getLapangs());
+  model.addAttribute(<span class="str">"bookings"</span>,         appDataService.getBookings());
+  model.addAttribute(<span class="str">"bookingsToday"</span>,    appDataService.getBookingsToday());
+  model.addAttribute(<span class="str">"users"</span>,            appDataService.getUsers());
+  model.addAttribute(<span class="str">"bookingCountMap"</span>,  countMap);
+}</pre>
+
+  <h2 id="bab3-template">3.10 Template Thymeleaf — Tampilan Antarmuka</h2>
+  <p>Semua halaman menggunakan <strong>Thymeleaf</strong> sebagai template engine yang terintegrasi dengan Spring Boot, dan <strong>Bootstrap 5</strong> sebagai framework CSS.</p>
+
+  <h3>Integrasi Thymeleaf dengan Spring Model</h3>
+<pre><span class="cm">&lt;!-- Menampilkan data dari model --&gt;</span>
+&lt;<span class="cls">div</span> <span class="an">th:text</span>=<span class="str">"${username}"</span>&gt;User&lt;/<span class="cls">div</span>&gt;
+
+<span class="cm">&lt;!-- Loop data lapang --&gt;</span>
+&lt;<span class="cls">div</span> <span class="an">th:each</span>=<span class="str">"lapang : ${lapangs}"</span>&gt;
+  &lt;<span class="cls">span</span> <span class="an">th:text</span>=<span class="str">"${lapang.name}"</span>&gt;&lt;/<span class="cls">span</span>&gt;
+  &lt;<span class="cls">img</span>  <span class="an">th:src</span>=<span class="str">"${lapang.photoUrl}"</span> .../&gt;
+&lt;/<span class="cls">div</span>&gt;
+
+<span class="cm">&lt;!-- Conditional rendering --&gt;</span>
+&lt;<span class="cls">div</span> <span class="an">th:if</span>=<span class="str">"${errorMessage}"</span> class=<span class="str">"alert alert-danger"</span>&gt;
+  &lt;<span class="cls">span</span> <span class="an">th:text</span>=<span class="str">"${errorMessage}"</span>&gt;&lt;/<span class="cls">span</span>&gt;
+&lt;/<span class="cls">div</span>&gt;
+
+<span class="cm">&lt;!-- Form post dengan action otomatis menggunakan th:action --&gt;</span>
+&lt;<span class="cls">form</span> <span class="an">th:action</span>=<span class="str">"@{/booking}"</span> method=<span class="str">"POST"</span>&gt;
+  &lt;<span class="cls">select</span> name=<span class="str">"lapangId"</span>&gt;
+    &lt;<span class="cls">option</span> <span class="an">th:each</span>=<span class="str">"l : ${lapangs}"</span>
+            <span class="an">th:value</span>=<span class="str">"${l.id}"</span>
+            <span class="an">th:text</span>=<span class="str">"${l.name}"</span>&gt;&lt;/<span class="cls">option</span>&gt;
+  &lt;/<span class="cls">select</span>&gt;
+&lt;/<span class="cls">form</span>&gt;</pre>
+
+  <h3>Skema Halaman Aplikasi</h3>
+  <table>
+    <tr><th>URL</th><th>Controller</th><th>Template</th><th>Akses</th></tr>
+    <tr><td><code>/</code></td><td>HomeController</td><td>redirect /login</td><td>Semua</td></tr>
+    <tr><td><code>/login</code></td><td>AuthController</td><td>login.html</td><td>Semua</td></tr>
+    <tr><td><code>/register</code></td><td>UserController</td><td>register.html</td><td>Semua</td></tr>
+    <tr><td><code>/dashboard</code></td><td>UserController</td><td>dashboard.html</td><td>USER saja</td></tr>
+    <tr><td><code>/home</code></td><td>UserController</td><td>home.html</td><td>USER saja</td></tr>
+    <tr><td><code>/admin/dashboard</code></td><td>AdminController</td><td>admin-dashboard.html</td><td>ADMIN saja</td></tr>
+    <tr><td><code>POST /booking</code></td><td>UserController</td><td>redirect /home</td><td>USER saja</td></tr>
+    <tr><td><code>POST /admin/lapang/upload-photo</code></td><td>AdminController</td><td>redirect /admin</td><td>ADMIN saja</td></tr>
+  </table>
+
+  <h3>Skema Database</h3>
+  <table>
+    <tr><th colspan="4">Tabel: <code>users</code></th></tr>
+    <tr><th>Kolom</th><th>Tipe</th><th>Constraint</th><th>Keterangan</th></tr>
+    <tr><td>id</td><td>BIGINT</td><td>PK, AUTO_INCREMENT</td><td>Primary key otomatis</td></tr>
+    <tr><td>username</td><td>VARCHAR(255)</td><td>UNIQUE, NOT NULL</td><td>Nama pengguna unik</td></tr>
+    <tr><td>password</td><td>VARCHAR(255)</td><td>NOT NULL</td><td>Password plain text</td></tr>
+    <tr><td>role</td><td>VARCHAR(50)</td><td>NOT NULL</td><td>"USER" atau "ADMIN"</td></tr>
+    <tr><td>email</td><td>VARCHAR(255)</td><td>NULL</td><td>Opsional</td></tr>
+    <tr><td>registered_at</td><td>DATETIME</td><td>NULL</td><td>Waktu registrasi</td></tr>
+  </table>
+  <table style="margin-top:1rem;">
+    <tr><th colspan="4">Tabel: <code>lapang</code></th></tr>
+    <tr><th>Kolom</th><th>Tipe</th><th>Constraint</th><th>Keterangan</th></tr>
+    <tr><td>id</td><td>BIGINT</td><td>PK, AUTO_INCREMENT</td><td>Primary key</td></tr>
+    <tr><td>name</td><td>VARCHAR(255)</td><td>NOT NULL</td><td>Nama lapangan</td></tr>
+    <tr><td>photo_path</td><td>VARCHAR(500)</td><td>NULL</td><td>Nama file foto, e.g. lapang-1.jpg</td></tr>
+  </table>
+  <table style="margin-top:1rem;">
+    <tr><th colspan="4">Tabel: <code>bookings</code></th></tr>
+    <tr><th>Kolom</th><th>Tipe</th><th>Constraint</th><th>Keterangan</th></tr>
+    <tr><td>id</td><td>BIGINT</td><td>PK, AUTO_INCREMENT</td><td>Primary key</td></tr>
+    <tr><td>lapang_id</td><td>BIGINT</td><td>NOT NULL</td><td>Referensi ID lapang</td></tr>
+    <tr><td>lapang_name</td><td>VARCHAR(255)</td><td>NOT NULL</td><td>Denormalisasi nama lapang</td></tr>
+    <tr><td>username</td><td>VARCHAR(255)</td><td>NOT NULL</td><td>Username pemesan</td></tr>
+    <tr><td>date</td><td>DATE</td><td>NOT NULL</td><td>Tanggal booking</td></tr>
+    <tr><td>start_time</td><td>TIME</td><td>NOT NULL</td><td>Jam mulai</td></tr>
+    <tr><td>end_time</td><td>TIME</td><td>NOT NULL</td><td>Jam selesai</td></tr>
+    <tr><td>created_at</td><td>DATETIME</td><td>NULL</td><td>Waktu pemesanan dibuat</td></tr>
+  </table>
+</div>
+<div class="page-break"></div>
+
+<!-- ═══════════════════════════════════════════════ BAB 4 ═══ -->
+<div class="content">
+  <div class="chapter-header">
+    <div class="ch-num">Bab 4</div>
+    <h2>Cara Menjalankan Proyek</h2>
+    <p>Panduan langkah demi langkah untuk mereplikasi aplikasi dari awal hingga berjalan</p>
+  </div>
+
+  <h2 id="bab4-clone">4.1 Clone / Download Proyek</h2>
+  <div class="box info">
+    <strong>🔗 Repository GitHub</strong>
+    Ganti URL di bawah dengan URL repositori Anda yang sebenarnya di GitHub.
+  </div>
+
+  <h3>Opsi A — Clone via Git</h3>
+<pre>git clone https://github.com/USERNAME/futsalbook.git
+cd futsalbook/web</pre>
+
+  <h3>Opsi B — Download ZIP</h3>
+  <div class="step"><div class="num">1</div><div>Buka halaman repository di GitHub.</div></div>
+  <div class="step"><div class="num">2</div><div>Klik tombol hijau <strong>Code</strong> → <strong>Download ZIP</strong>.</div></div>
+  <div class="step"><div class="num">3</div><div>Ekstrak ZIP ke direktori pilihan Anda.</div></div>
+  <div class="step"><div class="num">4</div><div>Buka VS Code → <strong>File → Open Folder</strong> → pilih folder <code>web</code>.</div></div>
+
+  <h2 id="bab4-db">4.2 Persiapan Database</h2>
+  <div class="step"><div class="num">1</div><div>Pastikan <strong>XAMPP MySQL sudah running</strong> (lihat Bab 2.4).</div></div>
+  <div class="step"><div class="num">2</div><div>Buka <strong>phpMyAdmin</strong> di <code>http://localhost/phpmyadmin</code>.</div></div>
+  <div class="step"><div class="num">3</div><div>(Opsional) Jika ingin membuat database secara manual, buka tab <strong>SQL</strong> di phpMyAdmin dan jalankan:
+<pre>CREATE DATABASE IF NOT EXISTS futsalbook_db
+  CHARACTER SET utf8mb4
+  COLLATE utf8mb4_unicode_ci;</pre>
+  </div></div>
+  <div class="box success">
+    <strong>✅ Tidak Perlu Buat Tabel Manual</strong>
+    Hibernate akan membuat semua tabel secara otomatis saat aplikasi pertama kali dijalankan berkat konfigurasi <code>ddl-auto=update</code>.
+  </div>
+
+  <h3>Verifikasi Konfigurasi application.properties</h3>
+  <p>Pastikan file <code>src/main/resources/application.properties</code> berisi:</p>
+<pre>spring.datasource.url=jdbc:mysql://localhost:3306/futsalbook_db\
+  ?createDatabaseIfNotExist=true&amp;useSSL=false&amp;serverTimezone=Asia/Jakarta
+spring.datasource.username=root
+spring.datasource.password=    <span class="cm"># kosong untuk XAMPP default</span></pre>
+  <div class="box warning">
+    <strong>⚠️ Jika MySQL Anda memiliki password</strong>, ubah baris <code>spring.datasource.password=</code> menjadi <code>spring.datasource.password=PASSWORD_ANDA</code>.
+  </div>
+
+  <h2 id="bab4-run">4.3 Menjalankan Aplikasi</h2>
+  <div class="step"><div class="num">1</div><div>Buka terminal di VS Code (<code>Ctrl+`</code>) atau Command Prompt.</div></div>
+  <div class="step"><div class="num">2</div><div>Masuk ke folder <code>web</code>:
+<pre>cd "c:\TUGAS\TUGAS ALGO\tugas besar\web"</pre>
+  </div></div>
+  <div class="step"><div class="num">3</div><div>Jalankan aplikasi:
+<pre>mvnw.cmd spring-boot:run</pre>
+  </div></div>
+  <div class="step"><div class="num">4</div><div>Tunggu hingga muncul pesan di console:
+<pre>Started WebApplication in X.XXX seconds (process running for Y)</pre>
+  </div></div>
+  <div class="step"><div class="num">5</div><div>Buka browser dan akses <strong>http://localhost:8080</strong>.</div></div>
+
+  <h3>Akun Bawaan (Seed Data)</h3>
+  <table>
+    <tr><th>Akun</th><th>Username</th><th>Password</th><th>Keterangan</th></tr>
+    <tr><td>Admin</td><td>admin</td><td>admin123</td><td>Hardcoded, tidak di database</td></tr>
+    <tr><td>Demo User</td><td>user1</td><td>user123</td><td>Seed otomatis di tabel users</td></tr>
+  </table>
+
+  <h2 id="bab4-ss">4.4 Screenshot Aplikasi</h2>
+  <p>Berikut tampilan setiap halaman aplikasi FutsalBook:</p>
+
+  <h3>Halaman Login</h3>
+  <div class="screenshot">
+    <div class="ss-title">📸 Screenshot: Halaman Login (/login)</div>
+    <p>Tampilkan screenshot halaman login di sini.<br>Tema: background gradient gelap (#1a1a2e → #16213e), card putih rounded, form username &amp; password dengan ikon.</p>
+    <div style="background:#1a1a2e;color:#4fc3f7;padding:1rem;border-radius:8px;font-size:9pt;margin-top:.5rem;font-family:'Fira Code',monospace;">
+      ⚽ Futsal<br>
+      <span style="color:#e2e8f0;">Selamat Datang</span><br>
+      <span style="color:#94a3b8;">Masuk untuk mulai booking lapang favoritmu</span><br><br>
+      [👤 username ...........]<br>
+      [🔒 password ...........]<br>
+      [→ Masuk]<br><br>
+      <span style="color:#64748b;">── atau ──</span><br>
+      Belum punya akun? <span style="color:#4fc3f7;">Daftar sekarang</span>
+    </div>
+  </div>
+
+  <h3>Halaman Register</h3>
+  <div class="screenshot">
+    <div class="ss-title">📸 Screenshot: Halaman Register (/register)</div>
+    <p>Tema identik dengan login. Form hanya berisi username dan password. Link ke halaman login tersedia di bawah form.</p>
+  </div>
+
+  <h3>Dashboard Pelanggan</h3>
+  <div class="screenshot">
+    <div class="ss-title">📸 Screenshot: Dashboard User (/dashboard)</div>
+    <p>Sidebar kiri navigasi. Kartu statistik (jumlah booking, lapang tersedia). Grid foto lapang (2 kolom, gambar besar). Riwayat booking sebagai card compact di kolom kanan.</p>
+  </div>
+
+  <h3>Halaman Booking Lapang</h3>
+  <div class="screenshot">
+    <div class="ss-title">📸 Screenshot: Booking Lapang (/home)</div>
+    <p>Form booking dengan gradient biru. Pilih lapang (dropdown), tanggal, jam mulai, jam selesai. Daftar lapang dan riwayat booking di kolom kanan.</p>
+  </div>
+
+  <h3>Dashboard Admin</h3>
+  <div class="screenshot">
+    <div class="ss-title">📸 Screenshot: Dashboard Admin (/admin/dashboard)</div>
+    <p>Tab navigasi: Overview · Manajemen Lapang · Semua Booking · Data Pelanggan. Statistik: total booking, pelanggan unik, booking hari ini.</p>
+  </div>
+
+  <h3>Manajemen Lapang (Admin)</h3>
+  <div class="screenshot">
+    <div class="ss-title">📸 Screenshot: Tab Manajemen Lapang di Admin Dashboard</div>
+    <p>Tabel daftar lapang. Per baris: nama lapang, foto (thumbnail), tombol Edit, Hapus, dan form Upload Foto.</p>
+  </div>
+
+  <h3>Data Pelanggan (Admin)</h3>
+  <div class="screenshot">
+    <div class="ss-title">📸 Screenshot: Tab Data Pelanggan di Admin Dashboard</div>
+    <p>Tabel: username, email, phone, tanggal daftar, jumlah total booking, tombol Hapus Akun.</p>
+  </div>
+
+  <h3>Verifikasi Database di phpMyAdmin</h3>
+  <div class="screenshot">
+    <div class="ss-title">📸 Screenshot: Database futsalbook_db di phpMyAdmin</div>
+    <p>Tampilkan 3 tabel: users, lapang, bookings. Tunjukkan isi tabel lapang (4 baris seed data) dan tabel bookings setelah membuat booking.</p>
+  </div>
+
+  <div class="box success" style="margin-top:1.5rem;">
+    <strong>✅ Cara Menambah Screenshot ke Buku</strong>
+    Ganti setiap kotak abu-abu di atas dengan screenshot aktual menggunakan fitur Print Screen atau snipping tool (<code>Win+Shift+S</code>). Simpan sebagai PNG lalu tempel ke dalam file HTML atau Word sebelum di-print ke PDF.
+  </div>
+</div>
+<div class="page-break"></div>
+
+<!-- ═══════════════════════════════════════════════ BAB 5 ═══ -->
+<div class="content">
+  <div class="chapter-header">
+    <div class="ch-num">Bab 5</div>
+    <h2>Penutup</h2>
+    <p>Kesimpulan dari proses pembangunan aplikasi dan saran pengembangan ke depan</p>
+  </div>
+
+  <h2 id="bab5-kesimpulan">5.1 Kesimpulan</h2>
+  <p>Berdasarkan hasil pembangunan aplikasi FutsalBook, dapat ditarik beberapa kesimpulan sebagai berikut:</p>
+
+  <div class="step"><div class="num">1</div><div>
+    <strong>Aplikasi web booking futsal berhasil dibangun</strong> menggunakan ekosistem Spring Boot 3.2 (Java 21) dengan pattern MVC yang terstruktur. Pemisahan antara Controller, Service, Repository, dan Model menghasilkan kode yang mudah dibaca dan dimaintain.
+  </div></div>
+
+  <div class="step"><div class="num">2</div><div>
+    <strong>Persistensi data berhasil diimplementasikan</strong> menggunakan Spring Data JPA dengan MySQL (XAMPP). Sebelumnya data disimpan di ArrayList (hilang saat restart); setelah integrasi JPA, semua data (user, lapang, booking) tersimpan permanen di database relasional.
+  </div></div>
+
+  <div class="step"><div class="num">3</div><div>
+    <strong>Masalah double-booking berhasil diatasi</strong> dengan query JPQL custom menggunakan logika interval overlap. Sistem secara otomatis menolak booking baru jika rentang waktu yang dipilih sudah digunakan oleh booking lain pada lapang dan tanggal yang sama.
+  </div></div>
+
+  <div class="step"><div class="num">4</div><div>
+    <strong>Manajemen peran (role) berhasil diimplementasikan</strong> menggunakan HttpSession. Pelanggan (USER) hanya dapat mengakses halaman booking dan dashboard pribadi. Admin dapat mengakses seluruh data melalui dashboard terpusat.
+  </div></div>
+
+  <div class="step"><div class="num">5</div><div>
+    <strong>Upload foto lapangan berhasil</strong> menggunakan Spring Multipart. File disimpan ke folder <code>uploads/</code> di disk lokal, dan path-nya disimpan di kolom <code>photo_path</code> pada tabel lapang. WebConfig meng-expose folder ini sebagai resource statis.
+  </div></div>
+
+  <div class="step"><div class="num">6</div><div>
+    <strong>Antarmuka pengguna yang responsif</strong> dibangun menggunakan Bootstrap 5 dan Thymeleaf. Tidak ada JavaScript framework tambahan — semua rendering dilakukan server-side oleh Thymeleaf, menjaga kesederhanaan dan kemudahan debugging.
+  </div></div>
+
+  <div class="conclusion-box">
+    <h3>🎯 Ringkasan Pencapaian</h3>
+    <p>Aplikasi FutsalBook berhasil menyelesaikan seluruh permasalahan yang didefinisikan: booking online, pencegahan double-booking, dashboard admin terpusat, dan persistensi data MySQL. Teknologi yang digunakan (Spring Boot, JPA, Thymeleaf, MySQL) merupakan stack enterprise-grade yang relevan di dunia industri.</p>
+  </div>
+
+  <h2 id="bab5-saran">5.2 Saran Pengembangan</h2>
+  <p>Berikut rekomendasi pengembangan aplikasi ini ke tahap berikutnya:</p>
+
+  <h3>🔒 Keamanan (Prioritas Tinggi)</h3>
+  <table>
+    <tr><th>Isu</th><th>Solusi yang Disarankan</th></tr>
+    <tr><td>Password disimpan plain text</td><td>Gunakan <code>BCryptPasswordEncoder</code> dari Spring Security</td></tr>
+    <tr><td>Tidak ada CSRF protection</td><td>Aktifkan Spring Security CSRF token</td></tr>
+    <tr><td>Admin credential hardcoded</td><td>Pindahkan ke database dengan role <code>ADMIN</code></td></tr>
+    <tr><td>Tidak ada rate limiting</td><td>Tambahkan filter pembatas login attempt</td></tr>
+  </table>
+
+  <h3>⚡ Fitur Baru</h3>
+  <ul style="padding-left:1.4rem;">
+    <li><strong>Notifikasi Email</strong> — kirim konfirmasi booking via email menggunakan Spring Mail + SMTP Gmail.</li>
+    <li><strong>Kalender Ketersediaan</strong> — tampilkan slot tersedia/terpakai dalam format kalender menggunakan FullCalendar.js.</li>
+    <li><strong>Pembayaran Online</strong> — integrasi Midtrans atau Xendit untuk pembayaran digital.</li>
+    <li><strong>Rating &amp; Review</strong> — pelanggan dapat memberi rating lapang setelah booking selesai.</li>
+    <li><strong>Export Data</strong> — admin dapat mengexport data booking ke format Excel/PDF.</li>
+    <li><strong>Manajemen Harga</strong> — setiap lapang dapat memiliki harga per jam yang berbeda-beda.</li>
+  </ul>
+
+  <h3>🏗️ Arsitektur &amp; Infrastruktur</h3>
+  <ul style="padding-left:1.4rem;">
+    <li><strong>REST API</strong> — refactor menjadi backend API (Spring Boot REST) + frontend terpisah (React/Vue.js).</li>
+    <li><strong>Docker</strong> — containerize aplikasi dan database untuk deployment yang konsisten.</li>
+    <li><strong>Foreign Key Constraints</strong> — tambahkan FK antara <code>bookings.lapang_id</code> → <code>lapang.id</code> untuk data integrity.</li>
+    <li><strong>Database Index</strong> — tambahkan index pada kolom <code>username</code>, <code>date</code>, dan <code>lapang_id</code> di tabel bookings untuk query yang lebih cepat.</li>
+    <li><strong>Connection Pooling</strong> — HikariCP sudah termasuk di Spring Boot, namun konfigurasi pool size perlu disesuaikan untuk production.</li>
+    <li><strong>Soft Delete</strong> — tambahkan kolom <code>deleted_at</code> alih-alih menghapus data langsung, sehingga histori tetap tersimpan.</li>
+  </ul>
+
+  <h3>📱 Pengalaman Pengguna</h3>
+  <ul style="padding-left:1.4rem;">
+    <li><strong>Aplikasi Mobile</strong> — bungkus aplikasi web menggunakan PWA (Progressive Web App) atau kembangkan app Android/iOS native.</li>
+    <li><strong>Dark Mode</strong> — tambahkan toggle tema gelap/terang.</li>
+    <li><strong>Pencarian &amp; Filter</strong> — fitur pencarian booking berdasarkan tanggal, lapang, atau nama pelanggan.</li>
+  </ul>
+
+  <div class="box info" style="margin-top:2rem;">
+    <strong>📚 Referensi &amp; Sumber Belajar</strong>
+    <ul style="padding-left:1.2rem; margin-top:.3rem;">
+      <li>Spring Boot Documentation: <code>https://spring.io/projects/spring-boot</code></li>
+      <li>Spring Data JPA Guide: <code>https://spring.io/projects/spring-data-jpa</code></li>
+      <li>Thymeleaf Documentation: <code>https://www.thymeleaf.org/documentation.html</code></li>
+      <li>Bootstrap 5 Docs: <code>https://getbootstrap.com/docs/5.3</code></li>
+      <li>MySQL Documentation: <code>https://dev.mysql.com/doc</code></li>
+      <li>Baeldung Spring Tutorials: <code>https://www.baeldung.com</code></li>
+    </ul>
+  </div>
+
+  <!-- Penutup akhir -->
+  <div style="text-align:center; margin-top:3rem; padding: 2rem; border-top: 2px solid #e2e8f0;">
+    <p style="font-size:13pt; font-weight:700; color:#1e3a5f;">~ Selesai ~</p>
+    <p style="color:#64748b; font-size:9pt;">
+      Buku Tutorial FutsalBook &mdash; Tugas Besar Algoritma &amp; Pemrograman<br>
+      Disusun menggunakan Spring Boot 3.2 &middot; Java 21 &middot; MySQL &middot; Thymeleaf &middot; Bootstrap 5<br>
+      &copy; 2025 / 2026
+    </p>
+  </div>
+</div>
+
+</body>
+</html>
